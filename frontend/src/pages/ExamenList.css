@@ -1,0 +1,87 @@
+/* src/pages/ExamenList.css */
+
+.examen-list-container {
+  max-width: 800px;
+  margin: 0 auto;
+  background-color: #f9f9f9;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.examen-list-container ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.examen-list-container li {
+  display: flex;
+  justify-content: space-between;  /* Añade espacio entre los elementos del contenido */
+  align-items: center;
+  background-color: #fff;
+  padding: 15px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.examen-list-container li div {
+  flex-grow: 1;
+}
+
+.examen-list-container .actions {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;  /* Alinea los botones a la derecha */
+}
+
+.examen-list-container .edit-button,
+.examen-list-container .delete-button {
+  background-color: #007bff;
+  border: none;
+  padding: 10px 15px;
+  color: white;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.examen-list-container .edit-button:hover {
+  background-color: #0056b3;
+}
+
+.examen-list-container .delete-button {
+  background-color: #dc3545;
+}
+
+.examen-list-container .delete-button:hover {
+  background-color: #c82333;
+}
+
+
+.crear-examen-container {
+  margin-top: 40px; /* Espaciado entre la lista de exámenes y el botón */
+}
+.examen-list {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  background-color: #f1f1f1;
+}
+
+.crear-examen-button {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #28a745;
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.crear-examen-button:hover {
+  background-color: #218838;
+}

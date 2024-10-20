@@ -1,0 +1,52 @@
+/* src/components/Header.css */
+
+.header {
+    background-color: #343a40;  /* Fondo oscuro */
+    padding: 20px;  /* Espaciado interno */
+    border-bottom: 2px solid #007bff;  /* Línea inferior azul */
+  }
+  
+  .header nav {
+    display: flex;
+    justify-content: space-between;  /* Espacio entre los elementos del menú */
+    align-items: center;  /* Alineación vertical centrada */
+  }
+  
+  .header ul {
+    list-style-type: none;  /* Eliminar viñetas de la lista */
+    display: flex;  /* Mostrar los enlaces en línea */
+    margin: 0;
+    padding: 0;
+  }
+  
+  .header ul li {
+    margin: 0 15px;  /* Espacio entre los elementos de la lista */
+  }
+  
+  .header ul li a {
+    text-decoration: none;  /* Eliminar subrayado de los enlaces */
+    color: #f8f9fa;  /* Texto blanco */
+    font-size: 18px;  /* Tamaño del texto */
+    font-weight: 500;  /* Peso del texto */
+    transition: color 0.3s ease;  /* Efecto de transición suave en el color */
+  }
+  
+  .header ul li a:hover {
+    color: #007bff;  /* Cambiar color al pasar el ratón por encima */
+  }
+  
+  .highlight {
+    background-color: #197bff;  /* Color de fondo del botón de "Crear Examen" */
+    color: white;  /* Texto blanco */
+    padding: 10px 20px;  /* Espaciado interno */
+    border-radius: 5px;  /* Bordes redondeados */
+    text-decoration: none;  /* Eliminar subrayado */
+    font-weight: bold;  /* Texto en negrita */
+    transition: background-color 0.3s ease, color 0.3s ease;  /* Efecto de transición */
+  }
+  
+  .highlight:hover {
+    background-color: #0056b3;  /* Color de fondo más oscuro al pasar el ratón */
+    color: white;  /* Mantener el texto blanco */
+  }
+  

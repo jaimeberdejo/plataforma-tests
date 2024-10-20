@@ -1,0 +1,195 @@
+/* src/pages/PreguntaList.css */
+
+.pregunta-list-container {
+  max-width: 800px;
+  margin: 0 auto;
+  background-color: #f9f9f9;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.pregunta-list-container ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.pregunta-card {
+  background-color: white;
+  padding: 15px;
+  margin-bottom: 20px;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  position: relative;
+  display: flex;
+  flex-direction: column; /* Asegura que los elementos estén en columnas */
+}
+
+.pregunta-header {
+  display: flex;
+  justify-content: space-between; /* Asegura que el texto y los botones se distribuyan */
+  align-items: flex-start; /* Alinea los botones con la parte superior del texto */
+  margin-bottom: 10px;
+}
+
+.pregunta-header strong {
+  flex-grow: 1;
+  margin-right: 10px; /* Añade espacio entre el texto de la pregunta y los botones */
+  word-wrap: break-word; /* Asegura que el texto largo se ajuste al ancho */
+}
+
+.actions {
+  display: flex;
+  gap: 10px;
+}
+
+.edit-button,
+.delete-button {
+  background-color: #007bff;
+  border: none;
+  padding: 10px 15px;
+  color: white;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.edit-button:hover {
+  background-color: #0056b3;
+}
+
+.delete-button {
+  background-color: #dc3545;
+}
+
+.delete-button:hover {
+  background-color: #c82333;
+} 
+
+.toggle-button {
+  display: block;
+  margin-top: 10px;
+  background-color: #007bff;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.toggle-button:hover {
+  background-color: #0056b3;
+}
+
+.respuestas-list {
+  margin-top: 10px;
+  padding-left: 20px;
+}
+
+.pregunta-list-container .create-button {
+  display: inline-block;
+  margin-bottom: 20px;
+  padding: 10px 20px;
+  background-color: #28a745;
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.pregunta-list-container .create-button:hover {
+  background-color: #218838;
+}
+
+/* src/pages/PreguntaList.css */
+
+.pregunta-list-container ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.pregunta-list-container ul li {
+  margin-bottom: 10px;
+}
+
+.pregunta-list-container ul li ul {
+  padding-left: 20px; /* Para indentar las opciones de respuesta */
+}
+
+.pregunta-list-container ul li ul li {
+  margin-bottom: 5px;
+}
+
+/* src/pages/PreguntaList.css */
+
+.toggle-button {
+  margin-top: 10px;
+  background-color: #007bff;
+  color: white;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.toggle-button:hover {
+  background-color: #0056b3;
+}
+
+.toggle-container {
+  margin-top: 10px; /* Añade margen entre la pregunta y el botón */
+}
+
+.pregunta-list-container ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.pregunta-list-container ul li {
+  margin-bottom: 10px;
+}
+
+.pregunta-list-container ul li ul {
+  padding-left: 20px; /* Para indentar las opciones de respuesta */
+}
+
+.pregunta-list-container ul li ul li {
+  margin-bottom: 5px;
+}
+
+.pregunta-card {
+  background-color: white;
+  padding: 15px;
+  margin-bottom: 20px;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.2s ease;
+}
+
+.pregunta-card:hover {
+  background-color: #f1f1f1;
+}
+
+.pregunta-card.dragging {
+  background-color: #d3d3d3;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+
+.guardar-orden-button {
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: #28a745;  /* Color verde */
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+
+.guardar-orden-button:hover {
+  background-color: #218838;  /* Un verde más oscuro al pasar el ratón */
+}

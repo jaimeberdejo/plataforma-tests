@@ -1,0 +1,57 @@
+/* src/components/ExamenCard.css */
+
+.examen-card {
+  background-color: #f9f9f9;    /* Fondo de la tarjeta */
+  border: 1px solid #ddd;       /* Borde sutil */
+  border-radius: 8px;           /* Bordes redondeados */
+  padding: 20px;                /* Espaciado interno */
+  margin: 20px auto;            /* Márgenes automáticos para centrar la tarjeta */
+  max-width: 800px;             /* Ancho máximo de la tarjeta */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);  /* Sombra para efecto de profundidad */
+  transition: transform 0.2s ease-in-out;    /* Animación suave al pasar el mouse */
+}
+
+.examen-card:hover {
+  transform: translateY(-5px);  /* Efecto de levantar la tarjeta al pasar el mouse */
+}
+
+.examen-card h3 {
+  font-size: 1.5rem;            /* Tamaño de la fuente para el título */
+  margin-bottom: 10px;          /* Espaciado debajo del título */
+  color: #333;                  /* Color del texto del título */
+}
+
+.examen-card p {
+  font-size: 1rem;              /* Tamaño de la fuente para la descripción */
+  color: #666;                  /* Color del texto de la descripción */
+  margin-bottom: 20px;          /* Espaciado debajo de la descripción */
+}
+
+.actions {
+  display: flex;                /* Botones alineados horizontalmente */
+  gap: 10px;                    /* Separación entre los botones */
+}
+
+.actions .btn {
+  background-color: #007bff;    /* Color de fondo de los botones normales */
+  color: white;                 /* Color del texto del botón */
+  padding: 10px 15px;           /* Relleno interno de los botones */
+  border: none;                 /* Sin borde */
+  border-radius: 4px;           /* Bordes ligeramente redondeados */
+  text-decoration: none;        /* Eliminar subrayado de los enlaces */
+  font-size: 1rem;              /* Tamaño de la fuente de los botones */
+  cursor: pointer;              /* Cambiar el cursor al pasar sobre el botón */
+  transition: background-color 0.3s ease;  /* Animación suave al cambiar de color */
+}
+
+.actions .btn:hover {
+  background-color: #0056b3;    /* Color de fondo al pasar el mouse por el botón normal */
+}
+
+.actions .delete-button {
+  background-color: #dc3545;    /* Color de fondo rojo para el botón de eliminar */
+}
+
+.actions .delete-button:hover {
+  background-color: #c82333;    /* Color más oscuro al pasar el mouse por el botón de eliminar */
+}
