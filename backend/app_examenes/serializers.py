@@ -5,14 +5,14 @@ from .models import Examen, Pregunta, Resultado, Tema, Opcion
 class OpcionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Opcion
-        fields = ['id', 'texto', 'es_correcta']  # Excluir 'pregunta' porque se asociará automáticamente
+        fields = ['id', 'texto', 'es_correcta']  
 
 class PreguntaSerializer(serializers.ModelSerializer):
-    opciones = OpcionSerializer(many=True)  # Permitimos la creación de varias opciones anidadas
+    opciones = OpcionSerializer(many=True) 
 
     class Meta:
         model = Pregunta
-        fields = ['id', 'texto', 'tema', 'examen', 'opciones']
+        fields = ['id', 'texto', 'tema', 'examen', 'opciones','explicacion']
 
     def create(self, validated_data):
         # Extraer las opciones del validated_data
@@ -29,6 +29,7 @@ class PreguntaSerializer(serializers.ModelSerializer):
     def update(self, instance, validated_data):
         opciones_data = validated_data.pop('opciones')
         instance.texto = validated_data.get('texto', instance.texto)
+        instance.explicacion = validated_data.get('explicacion', instance.explicacion)
         instance.save()
 
         # Actualizar las opciones de la pregunta

@@ -20,7 +20,6 @@ class ExamenViewSet(viewsets.ModelViewSet):
         examen = self.get_object()  # Obtener el examen específico
         preguntas = Pregunta.objects.filter(examen=examen)
 
-        # Si quieres que las preguntas también se ordenen de una forma específica
         preguntas = preguntas.order_by('id')  # Ordenar preguntas por 'id'
 
         serializer = PreguntaSerializer(preguntas, many=True)
@@ -81,11 +80,13 @@ class ExamenResultadosView(APIView):
                         # Verificar si la respuesta fue correcta
                         correcta = any(opcion['correcta'] and opcion['seleccionada'] for opcion in opciones_data)
 
+                        # Añadir la explicación de la pregunta (si existe)
                         preguntas_respuestas.append({
                             'id': pregunta.id,
                             'texto': pregunta.texto,
                             'correcta': correcta,
-                            'opciones': opciones_data
+                            'opciones': opciones_data,
+                            'explicacion': pregunta.explicacion 
                         })
                     except Pregunta.DoesNotExist:
                         continue

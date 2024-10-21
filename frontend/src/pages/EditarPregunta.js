@@ -8,6 +8,7 @@ const EditarPregunta = () => {
   const navigate = useNavigate();
 
   const [texto, setTexto] = useState('');  // Estado para el texto de la pregunta
+  const [explicacion, setExplicacion] = useState('');  // Estado para la explicación de la respuesta
   const [opciones, setOpciones] = useState([]);  // Estado para las opciones de respuesta
   const [respuestaCorrecta, setRespuestaCorrecta] = useState('');  // Estado para la opción correcta
   const [loading, setLoading] = useState(true);
@@ -18,6 +19,7 @@ const EditarPregunta = () => {
         const response = await getPreguntaById(preguntaId);  // Obtener la pregunta por su ID
         const pregunta = response.data;
         setTexto(pregunta.texto);
+        setExplicacion(pregunta.explicacion || '');  // Cargar la explicación si existe
         setOpciones(pregunta.opciones);
         const correcta = pregunta.opciones.find(opcion => opcion.es_correcta);
         setRespuestaCorrecta(correcta ? correcta.texto : '');
@@ -63,12 +65,14 @@ const EditarPregunta = () => {
 
     const preguntaData = {
       texto,
+      explicacion,  // Incluir la explicación en los datos enviados
       opciones: opcionesData,
       examen: examenId,  // Asegúrate de que el ID del examen se incluya correctamente
     };
 
     try {
       await updatePregunta(preguntaId, preguntaData);
+      console.log('Datos enviados:', preguntaData);
       navigate(`/examenes/${examenId}/preguntas`);
     } catch (error) {
       console.error('Error al actualizar la pregunta:', error);
@@ -134,6 +138,16 @@ const EditarPregunta = () => {
             ))}
           </select>
         </div>
+
+
+        <div className="form-group">
+          <label>Explicación (opcional)</label>
+          <textarea
+            value={explicacion}
+            onChange={(e) => setExplicacion(e.target.value)}  // Manejar el campo de la explicación
+          />
+        </div>
+
 
         <button type="submit" className="submit-button">Guardar Cambios</button>
       </form>

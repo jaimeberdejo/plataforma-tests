@@ -7,7 +7,7 @@ const Resultado = () => {
   const { examenId } = useParams();
   const navigate = useNavigate();
   const [resultado, setResultado] = useState(null);
-  const [mostrarSoloErroneas, setMostrarSoloErroneas] = useState(false); // Estado para mostrar todas o solo las preguntas incorrectas
+  const [mostrarSoloErroneas, setMostrarSoloErroneas] = useState(false);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -16,25 +16,23 @@ const Resultado = () => {
       try {
         const response = await getResultado(examenId); // Llamar al servicio para obtener los resultados
         const resultados = response.data;
-  
+
         if (resultados && resultados.length > 0) {
-          // obtener el último resultado:
           const ultimoResultado = resultados[resultados.length - 1];
           setResultado(ultimoResultado);  // Almacenar el último resultado
         } else {
           setError('No se encontraron resultados para este examen');
         }
-  
+
         setLoading(false);
       } catch (err) {
         setError('Error al obtener los resultados del examen');
         setLoading(false);
       }
     };
-  
+
     fetchResultado();
   }, [examenId]);
-  
 
   if (loading) {
     return <div>Cargando resultados...</div>;
@@ -44,7 +42,6 @@ const Resultado = () => {
     return <div>{error}</div>;
   }
 
-  // Verifica si resultado y preguntas existen antes de mapear
   if (!resultado || !resultado.preguntas) {
     return <div>No se encontraron resultados para este examen.</div>;
   }
@@ -64,9 +61,6 @@ const Resultado = () => {
   const preguntasFiltradas = mostrarSoloErroneas
     ? resultado.preguntas.filter(p => !p.correcta)
     : resultado.preguntas;
-
-    const totalPreguntas = resultado.respuestas ? Object.keys(resultado.respuestas).length : 0;
-
 
   return (
     <div className="resultado-container">
@@ -103,6 +97,11 @@ const Resultado = () => {
                     </li>
                   ))}
                 </ul>
+                {pregunta.explicacion && (
+                  <p className="explicacion">
+                    <strong>Explicación:</strong> {pregunta.explicacion}
+                  </p>
+                )}
               </li>
             ))}
           </ul>

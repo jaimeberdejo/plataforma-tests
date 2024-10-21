@@ -8,6 +8,7 @@ const CrearPregunta = () => {
   const navigate = useNavigate();
 
   const [descripcion, setDescripcion] = useState('');
+  const [explicacion, setExplicacion] = useState(''); // Nuevo campo de explicación
   const [opciones, setOpciones] = useState(['', '']);  // Al menos dos opciones por defecto
   const [respuestaCorrecta, setRespuestaCorrecta] = useState('');
 
@@ -26,7 +27,6 @@ const CrearPregunta = () => {
       const newOpciones = opciones.filter((_, i) => i !== index);
       setOpciones(newOpciones);
 
-      // Si la opción eliminada era la respuesta correcta, reiniciar el campo de respuesta correcta
       if (opciones[index] === respuestaCorrecta) {
         setRespuestaCorrecta('');
       }
@@ -36,17 +36,16 @@ const CrearPregunta = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
   
-    // Mapeamos las opciones para que incluyan el campo "es_correcta"
     const opcionesData = opciones.map((texto) => ({
       texto,
-      es_correcta: texto === respuestaCorrecta,  // Marcamos la opción correcta
+      es_correcta: texto === respuestaCorrecta,
     }));
   
-    // Creamos los datos de la pregunta incluyendo las opciones y el examen
     const preguntaData = {
-      texto: descripcion,  // Cambia 'descripcion' por 'texto' que es lo que tu modelo espera
-      opciones: opcionesData,  // Las opciones anidadas
-      examen: examenId,  // ID del examen al que pertenece la pregunta
+      texto: descripcion,
+      opciones: opcionesData,
+      examen: examenId,
+      explicacion: explicacion, 
     };
   
     try {
@@ -80,7 +79,6 @@ const CrearPregunta = () => {
                 onChange={(e) => handleChangeOpcion(index, e.target.value)}
                 required
               />
-              {/* Botón para eliminar la opción, solo si hay más de 2 opciones */}
               {opciones.length > 2 && (
                 <button
                   type="button"
@@ -111,6 +109,15 @@ const CrearPregunta = () => {
               </option>
             ))}
           </select>
+        </div>
+
+
+        <div className="form-group">
+          <label>Explicación (opcional)</label>
+          <textarea
+            value={explicacion}
+            onChange={(e) => setExplicacion(e.target.value)} // Campo de texto para explicación
+          />
         </div>
 
         <button type="submit" className="submit-button">Crear Pregunta</button>

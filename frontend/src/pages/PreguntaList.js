@@ -1,5 +1,3 @@
-// src/pages/PreguntaList.js
-
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { getPreguntasByExamen, deletePregunta } from '../services/preguntaService';
@@ -88,17 +86,28 @@ const PreguntaList = () => {
                 onClick={() => toggleColapsar(pregunta.id)}
                 className="toggle-button"
               >
-                {colapsadas[pregunta.id] ? 'Ocultar Respuestas' : 'Mostrar Respuestas'}
+                {colapsadas[pregunta.id] ? 'Ocultar Opciones' : 'Mostrar Opciones'}
               </button>
 
               {colapsadas[pregunta.id] && (
-                <ul className="respuestas-list">
-                  {pregunta.opciones.map((opcion, index) => (
-                    <li key={index}>
-                      {indexToLetter(index)} {opcion.texto}
-                    </li>
-                  ))}
-                </ul>
+                <div>
+                  <ul className="respuestas-list">
+                    {pregunta.opciones.map((opcion, index) => (
+                      <li 
+                        key={index} 
+                        className={opcion.es_correcta ? 'opcion-correcta' : ''}  // Marcar la opción correcta
+                      >
+                        {indexToLetter(index)} {opcion.texto}
+                        {opcion.es_correcta && <span className="icono-correcto"> ✔ Correcta</span>}
+                      </li>
+                    ))}
+                  </ul>
+                  {pregunta.explicacion && (  // Mostrar la explicación si existe
+                    <p className="explicacion">
+                      <strong>Explicación:</strong> {pregunta.explicacion}
+                    </p>
+                  )}
+                </div>
               )}
             </li>
           ))
