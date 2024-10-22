@@ -1,21 +1,16 @@
 from django.db import models
 
 
-#Modelo Tema: Si los exámenes se dividen por temas
-class Tema(models.Model):
-    nombre = models.CharField(max_length=200)
-
-    def __str__(self):
-        return self.nombre
 
 #Modelo Examen
 class Examen(models.Model):
     nombre = models.CharField(max_length=200)  # Nombre del examen
     descripcion = models.TextField(blank=True, null=True)  # Descripción opcional
-    dividir_por_temas = models.BooleanField(default=False)  # Si el examen está dividido por temas
     randomizar_preguntas = models.BooleanField(default=False)  # Si se randomizan las preguntas
     randomizar_opciones = models.BooleanField(default=False)  # Si se randomizan las respuestas
     preguntas_por_pagina = models.IntegerField(default=1)  # Preguntas por página
+    numero_preguntas = models.IntegerField(default=10)  # Número de preguntas a mostrar en la realización del examen
+
 
     def __str__(self):
         return self.nombre
@@ -23,7 +18,6 @@ class Examen(models.Model):
 #Modelo Pregunta
 class Pregunta(models.Model):
     texto = models.TextField()  
-    tema = models.ForeignKey(Tema, on_delete=models.SET_NULL, null=True, blank=True)
     examen = models.ForeignKey(Examen, on_delete=models.CASCADE, related_name="preguntas")
     explicacion = models.TextField(blank=True, null=True)  
 

@@ -1,5 +1,3 @@
-/* src/pages/ExamenList.css */
-
 .examen-list-container {
   max-width: 800px;
   margin: 0 auto;
@@ -58,10 +56,13 @@
   background-color: #c82333;
 }
 
-
 .crear-examen-container {
-  margin-top: 40px; /* Espaciado entre la lista de exámenes y el botón */
+  margin-top: 40px; /* Espaciado entre la lista de exámenes y los botones */
+  display: flex;
+  gap: 20px;  /* Añadir espacio entre los botones */
+  justify-content: center; /* Centrar ambos botones en el contenedor */
 }
+
 .examen-list {
   display: flex;
   flex-direction: column;
@@ -70,7 +71,8 @@
   background-color: #f1f1f1;
 }
 
-.crear-examen-button {
+.crear-examen-button,
+.crear-examen-txt-button {
   display: inline-block;
   padding: 10px 20px;
   background-color: #28a745;
@@ -82,6 +84,15 @@
   transition: background-color 0.3s ease;
 }
 
-.crear-examen-button:hover {
+.crear-examen-button:hover,
+.crear-examen-txt-button:hover {
   background-color: #218838;
+}
+
+.crear-examen-txt-button {
+  background-color: #17a2b8; /* Color diferente para el botón "Crear Examen desde TXT" */
+}
+
+.crear-examen-txt-button:hover {
+  background-color: #138496;
 }

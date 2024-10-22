@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Examen, Pregunta, Resultado, Tema, Opcion
+from .models import Examen, Pregunta, Resultado, Opcion
 
         
 class OpcionSerializer(serializers.ModelSerializer):
@@ -12,15 +12,15 @@ class PreguntaSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Pregunta
-        fields = ['id', 'texto', 'tema', 'examen', 'opciones','explicacion']
+        fields = ['id', 'texto', 'examen', 'opciones','explicacion']
 
     def create(self, validated_data):
-        # Extraer las opciones del validated_data
+        #Extraer las opciones del validated_data
         opciones_data = validated_data.pop('opciones')
-        # Crear la pregunta primero
+        #Crear la pregunta primero
         pregunta = Pregunta.objects.create(**validated_data)
 
-        # Crear cada opción y asociarla con la pregunta
+        #Crear cada opción y asociarla con la pregunta
         for opcion_data in opciones_data:
             Opcion.objects.create(pregunta=pregunta, **opcion_data)
 
@@ -32,8 +32,8 @@ class PreguntaSerializer(serializers.ModelSerializer):
         instance.explicacion = validated_data.get('explicacion', instance.explicacion)
         instance.save()
 
-        # Actualizar las opciones de la pregunta
-        instance.opciones.all().delete()  # Eliminar las opciones antiguas
+        #Actualizar las opciones de la pregunta
+        instance.opciones.all().delete()  #Eliminar las opciones antiguas
         for opcion_data in opciones_data:
             Opcion.objects.create(pregunta=instance, **opcion_data)
 
@@ -46,11 +46,6 @@ class ExamenSerializer(serializers.ModelSerializer):
         model = Examen
         fields = '__all__'
 
-
-class TemaSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Tema
-        fields = '__all__'
         
     
 class ResultadoSerializer(serializers.ModelSerializer):

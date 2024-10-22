@@ -14,6 +14,7 @@ const RealizarExamen = () => {
   const [loading, setLoading] = useState(true);
   const [randomizarPreguntas, setRandomizarPreguntas] = useState(false);
   const [randomizarOpciones, setRandomizarOpciones] = useState(false);
+  const [numeroPreguntas, setNumeroPreguntas] = useState(10);  // Nuevo estado para el número de preguntas
 
   useEffect(() => {
     const fetchExamenData = async () => {
@@ -21,28 +22,28 @@ const RealizarExamen = () => {
         const examenData = await getExamenById(examenId);
 
         if (examenData) {
-          setPreguntasPorPagina(examenData.preguntas_por_pagina || 1); 
-          setRandomizarPreguntas(examenData.randomizar_preguntas);  // Establece si las preguntas deben randomizarse
-          setRandomizarOpciones(examenData.randomizar_opciones);  // Establece si las opciones deben randomizarse
-        } else {
-          console.error('Datos del examen incompletos o no disponibles.');
+          setPreguntasPorPagina(examenData.preguntas_por_pagina || 1);
+          setRandomizarPreguntas(examenData.randomizar_preguntas);
+          setRandomizarOpciones(examenData.randomizar_opciones);
+          setNumeroPreguntas(examenData.numero_preguntas || 10);  // Establecer el número de preguntas
         }
 
         const response = await getPreguntasByExamen(examenId);
         let preguntasObtenidas = response.data;
 
-        // Si el examen tiene randomizar_preguntas en true, mezclar las preguntas
         if (randomizarPreguntas) {
           preguntasObtenidas = mezclarArray(preguntasObtenidas);
         }
 
-        // Si el examen tiene randomizar_opciones en true, mezclar las opciones dentro de cada pregunta
         if (randomizarOpciones) {
           preguntasObtenidas = preguntasObtenidas.map((pregunta) => ({
             ...pregunta,
             opciones: mezclarArray(pregunta.opciones),
           }));
         }
+
+        // Limitar las preguntas al número establecido en `numero_preguntas`
+        preguntasObtenidas = preguntasObtenidas.slice(0, numeroPreguntas);
 
         setPreguntas(preguntasObtenidas);
         setLoading(false);
@@ -53,10 +54,9 @@ const RealizarExamen = () => {
     };
 
     fetchExamenData();
-  }, [examenId, randomizarPreguntas, randomizarOpciones]);
+  }, [examenId, randomizarPreguntas, randomizarOpciones, numeroPreguntas]);
 
   const mezclarArray = (array) => {
-    // Algoritmo de Fisher-Yates para mezclar un array
     for (let i = array.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
       [array[i], array[j]] = [array[j], array[i]];

@@ -74,3 +74,13 @@ export const enviarRespuestas = async (examenId, respuestasJSON) => {
     throw error;
   }
 };
+
+
+
+export const uploadTxtExamen = async (formData) => {
+  return axios.post('/gestion/api/examenes/upload-txt/', formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+  });
+};

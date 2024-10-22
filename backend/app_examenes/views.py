@@ -1,8 +1,8 @@
 from rest_framework.decorators import api_view, action 
 from rest_framework.response import Response
 from rest_framework import status
-from .models import Examen, Pregunta, Opcion, Tema, Resultado
-from .serializers import ExamenSerializer, PreguntaSerializer, OpcionSerializer, TemaSerializer, ResultadoSerializer
+from .models import Examen, Pregunta, Opcion, Resultado
+from .serializers import ExamenSerializer, PreguntaSerializer, OpcionSerializer, ResultadoSerializer
 from rest_framework import viewsets  # Importa viewsets
 from rest_framework.views import APIView
 from datetime import timedelta
@@ -11,7 +11,7 @@ from datetime import timedelta
 
 # Viewset para el modelo Examen
 class ExamenViewSet(viewsets.ModelViewSet):
-    queryset = Examen.objects.all().order_by('id')  # Ordenar siempre por 'id'
+    queryset = Examen.objects.all().order_by('id') 
     serializer_class = ExamenSerializer
 
     # Acción personalizada para obtener las preguntas de un examen
@@ -20,7 +20,7 @@ class ExamenViewSet(viewsets.ModelViewSet):
         examen = self.get_object()  # Obtener el examen específico
         preguntas = Pregunta.objects.filter(examen=examen)
 
-        preguntas = preguntas.order_by('id')  # Ordenar preguntas por 'id'
+        preguntas = preguntas.order_by('id')  
 
         serializer = PreguntaSerializer(preguntas, many=True)
         return Response(serializer.data)
@@ -36,10 +36,6 @@ class OpcionViewSet(viewsets.ModelViewSet):
     queryset = Opcion.objects.all()
     serializer_class = OpcionSerializer
 
-# Viewset para el modelo Tema
-class TemaViewSet(viewsets.ModelViewSet):
-    queryset = Tema.objects.all()
-    serializer_class = TemaSerializer
 
 # Viewset para el modelo Resultado
 class ResultadoViewSet(viewsets.ModelViewSet):
@@ -47,8 +43,6 @@ class ResultadoViewSet(viewsets.ModelViewSet):
     serializer_class = ResultadoSerializer
 
     
-
-
 
 class ExamenResultadosView(APIView):
     def get(self, request, examen_id):
@@ -66,7 +60,6 @@ class ExamenResultadosView(APIView):
                         pregunta = Pregunta.objects.get(id=pregunta_id, examen=examen)
                         opciones = Opcion.objects.filter(pregunta=pregunta)
 
-                        # Marcar la opción correcta y la opción seleccionada
                         opciones_data = [
                             {
                                 'id': opcion.id,
@@ -77,10 +70,8 @@ class ExamenResultadosView(APIView):
                             for opcion in opciones
                         ]
 
-                        # Verificar si la respuesta fue correcta
                         correcta = any(opcion['correcta'] and opcion['seleccionada'] for opcion in opciones_data)
 
-                        # Añadir la explicación de la pregunta (si existe)
                         preguntas_respuestas.append({
                             'id': pregunta.id,
                             'texto': pregunta.texto,
@@ -161,3 +152,63 @@ class ExamenResultadosView(APIView):
         except Exception as e:
             return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
         
+
+
+
+class UploadTxtExamenView(APIView):
+    def post(self, request):
+        archivo_txt = request.FILES.get('archivo_txt')
+
+        if not archivo_txt:
+            return Response({'error': 'No se adjuntó ningún archivo'}, status=status.HTTP_400_BAD_REQUEST)
+
+        try:
+            contenido = archivo_txt.read().decode('utf-8')
+            examen, preguntas = self.procesar_contenido_txt(contenido)
+
+            return Response({'mensaje': 'Examen y preguntas creados correctamente'}, status=status.HTTP_201_CREATED)
+        except Exception as e:
+            return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
+
+    def procesar_contenido_txt(self, contenido):
+        # Expresiones regulares para extraer las secciones del archivo
+        examen_regex = re.compile(r'Nombre del Examen:\s*(.*)\nDescripción:\s*(.*)\n', re.MULTILINE)
+        pregunta_regex = re.compile(r'Pregunta\s*\d+:\s*(.*?)\n((?:[a-c]\)\s*.*\n)+)Correcta:\s*(\w)\nExplicación:\s*(.*)\n', re.MULTILINE)
+
+        # Extraer información del examen
+        examen_match = examen_regex.search(contenido)
+        if not examen_match:
+            raise ValueError('El archivo no tiene la estructura correcta para el examen.')
+
+        nombre_examen = examen_match.group(1)
+        descripcion_examen = examen_match.group(2)
+
+        # Crear el examen en la base de datos
+        examen = Examen.objects.create(
+            nombre=nombre_examen,
+            descripcion=descripcion_examen,
+            randomizar_preguntas=False,
+            randomizar_opciones=False,
+            preguntas_por_pagina=5  # O un valor predeterminado
+        )
+
+        # Extraer preguntas y opciones
+        preguntas_match = pregunta_regex.findall(contenido)
+        for pregunta_texto, opciones_texto, correcta, explicacion in preguntas_match:
+            pregunta = Pregunta.objects.create(
+                texto=pregunta_texto.strip(),
+                examen=examen,
+                explicacion=explicacion.strip()
+            )
+
+            # Procesar las opciones
+            opciones = re.findall(r'([a-c])\)\s*(.*)', opciones_texto)
+            for letra, texto_opcion in opciones:
+                es_correcta = letra.lower() == correcta.lower()
+                Opcion.objects.create(
+                    texto=texto_opcion.strip(),
+                    pregunta=pregunta,
+                    es_correcta=es_correcta
+                )
+
+        return examen, preguntas_match

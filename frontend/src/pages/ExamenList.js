@@ -1,9 +1,7 @@
-// src/pages/ExamenList.js
-
 import React, { useEffect, useState } from 'react';
 import ExamenCard from '../components/ExamenCard';
-import { getExamenes, deleteExamen } from '../services/examenService'; // Asegúrate de importar deleteExamen
-import { Link } from 'react-router-dom'; // Importa Link para la navegación
+import { getExamenes, deleteExamen } from '../services/examenService'; 
+import { Link } from 'react-router-dom'; 
 import './ExamenList.css';
 
 const ExamenList = () => {
@@ -20,8 +18,8 @@ const ExamenList = () => {
   const handleDelete = async (id) => {
     if (window.confirm('¿Estás seguro de que deseas eliminar este examen?')) {
       try {
-        await deleteExamen(id); // Llama al servicio para eliminar el examen
-        setExamenes(examenes.filter((examen) => examen.id !== id)); // Actualiza el estado
+        await deleteExamen(id);
+        setExamenes(examenes.filter((examen) => examen.id !== id)); 
       } catch (error) {
         console.error('Error al eliminar el examen:', error);
       }
@@ -35,10 +33,13 @@ const ExamenList = () => {
         <ExamenCard key={examen.id} examen={examen} handleDelete={handleDelete} />
       ))}
 
-      {/* Botón Crear Examen */}
+      {/* Contenedor para ambos botones */}
       <div className="crear-examen-container">
         <Link to="/crear-examen" className="crear-examen-button">
           Crear Nuevo Examen
+        </Link>
+        <Link to="/crear-examen-txt" className="crear-examen-txt-button">
+          Crear Examen desde TXT
         </Link>
       </div>
     </div>

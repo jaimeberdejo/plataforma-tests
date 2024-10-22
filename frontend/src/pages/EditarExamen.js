@@ -1,5 +1,3 @@
-// src/pages/EditarExamen.js
-
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { getExamenById, updateExamen } from '../services/examenService';
@@ -10,7 +8,8 @@ const EditarExamen = () => {
   const [descripcion, setDescripcion] = useState('');
   const [randomizarPreguntas, setRandomizarPreguntas] = useState(false);
   const [randomizarOpciones, setRandomizarOpciones] = useState(false);
-  const [preguntasPorPagina, setPreguntasPorPagina] = useState('todas');
+  const [preguntasPorPagina, setPreguntasPorPagina] = useState('');
+  const [numeroPreguntas, setNumeroPreguntas] = useState(10);  // Estado para el número de preguntas
   const [isLoading, setIsLoading] = useState(true);
   const { id } = useParams();
   const navigate = useNavigate();
@@ -26,6 +25,7 @@ const EditarExamen = () => {
           setRandomizarPreguntas(examen.randomizar_preguntas || false);
           setRandomizarOpciones(examen.randomizar_opciones || false);
           setPreguntasPorPagina(examen.preguntas_por_pagina || 'todas');
+          setNumeroPreguntas(examen.numero_preguntas || 10);  // Establece el número de preguntas
         } else {
           console.error('Examen no encontrado');
         }
@@ -39,7 +39,6 @@ const EditarExamen = () => {
   
     fetchExamen();
   }, [id]);
-  
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -49,10 +48,12 @@ const EditarExamen = () => {
       randomizar_preguntas: randomizarPreguntas,
       randomizar_opciones: randomizarOpciones,
       preguntas_por_pagina: preguntasPorPagina,
+      numero_preguntas: numeroPreguntas,  // Incluir el número de preguntas en la actualización
     };
+
     try {
       await updateExamen(id, examenData);
-      navigate('/examenes');  // Redirigir después de guardar los cambios
+      navigate('/examenes');
     } catch (error) {
       console.error('Error al actualizar el examen:', error);
     }
@@ -85,25 +86,32 @@ const EditarExamen = () => {
         </div>
 
         <div className="form-group">
-          <label>
-            ¿Randomizar el orden de las preguntas?
-            <input
-              type="checkbox"
-              checked={randomizarPreguntas}
-              onChange={(e) => setRandomizarPreguntas(e.target.checked)}
-            />
-          </label>
+          <label>Número de preguntas del examen</label>
+          <input
+            type="number"
+            value={numeroPreguntas}
+            onChange={(e) => setNumeroPreguntas(e.target.value)}
+            min="1"
+            required
+          />
         </div>
 
         <div className="form-group">
-          <label>
-            ¿Randomizar el orden de las Opciones?
-            <input
-              type="checkbox"
-              checked={randomizarOpciones}
-              onChange={(e) => setRandomizarOpciones(e.target.checked)}
-            />
-          </label>
+          <label>¿Randomizar el orden de las preguntas?</label>
+          <input
+            type="checkbox"
+            checked={randomizarPreguntas}
+            onChange={(e) => setRandomizarPreguntas(e.target.checked)}
+          />
+        </div>
+
+        <div className="form-group">
+          <label>¿Randomizar el orden de las Opciones?</label>
+          <input
+            type="checkbox"
+            checked={randomizarOpciones}
+            onChange={(e) => setRandomizarOpciones(e.target.checked)}
+          />
         </div>
 
         <div className="form-group">

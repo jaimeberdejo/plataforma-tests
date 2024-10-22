@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Home from './pages/Home';  // Página de inicio
 import ExamenList from './pages/ExamenList';  // Página de lista de exámenes
 import CrearExamen from './pages/CrearExamen';  // Página para crear un examen
+import CrearExamenTxt from './pages/CrearExamenTxt';  // Página para crear un examen desde un archivo .txt
 import EditarExamen from './pages/EditarExamen';  // Página para editar un examen
 import PreguntaList from './pages/PreguntaList';  // Página para listar las preguntas
 import CrearPregunta from './pages/CrearPregunta';  // Página para crear una nueva pregunta
@@ -24,6 +25,7 @@ const App = () => {
             <Route path="/" element={<Home />} />  {/* Página de inicio */}
             <Route path="/examenes" element={<ExamenList />} />  {/* Lista de exámenes */}
             <Route path="/crear-examen" element={<CrearExamen />} />  {/* Crear un nuevo examen */}
+            <Route path="/crear-examen-txt" element={<CrearExamenTxt />} />  {/* Crear un examen desde un archivo .txt */}
             <Route path="/examenes/:id/editar" element={<EditarExamen />} />  {/* Editar un examen */}
             <Route path="/examenes/:examenId/preguntas" element={<PreguntaList />} />  {/* Lista de preguntas de un examen */}
             <Route path="/examenes/:examenId/crear-pregunta" element={<CrearPregunta />} />  {/* Crear una nueva pregunta */}

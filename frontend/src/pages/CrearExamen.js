@@ -6,10 +6,10 @@ import './ExamenForm.css';
 const CrearExamen = () => {
   const [nombre, setNombre] = useState('');
   const [descripcion, setDescripcion] = useState('');
-  const [dividirPorTemas, setDividirPorTemas] = useState(false);
   const [randomizarPreguntas, setRandomizarPreguntas] = useState(false);
   const [randomizarOpciones, setRandomizarOpciones] = useState(false);
   const [preguntasPorPagina, setPreguntasPorPagina] = useState('');
+  const [numeroPreguntas, setNumeroPreguntas] = useState(10);  // Nuevo estado para el número de preguntas
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -17,15 +17,15 @@ const CrearExamen = () => {
     const examenData = {
       nombre,
       descripcion,
-      dividir_por_temas: dividirPorTemas,
       randomizar_preguntas: randomizarPreguntas,
       randomizar_opciones: randomizarOpciones,
       preguntas_por_pagina: preguntasPorPagina,
+      numero_preguntas: numeroPreguntas,  // Incluir el número de preguntas en el objeto de datos
     };
 
     try {
-      const examenCreado = await createExamen(examenData); // Crear el examen y obtener el examen creado
-      navigate(`/examenes/${examenCreado.id}/preguntas`);  // Redirigir a la lista de preguntas del examen recién creado
+      const examenCreado = await createExamen(examenData);
+      navigate(`/examenes/${examenCreado.id}/preguntas`);
     } catch (error) {
       console.error('Error al crear el examen:', error);
     }
@@ -35,6 +35,7 @@ const CrearExamen = () => {
     <div className="examen-form-container">
       <h2>Crear Examen</h2>
       <form onSubmit={handleSubmit} className="examen-form">
+        
         <div className="form-group">
           <label>Nombre del Examen</label>
           <input
@@ -54,36 +55,32 @@ const CrearExamen = () => {
         </div>
 
         <div className="form-group">
-          <label>
-            ¿Dividir examen por temas?
-            <input
-              type="checkbox"
-              checked={dividirPorTemas}
-              onChange={(e) => setDividirPorTemas(e.target.checked)}
-            />
-          </label>
+          <label>Número de preguntas del examen</label>
+          <input
+            type="number"
+            value={numeroPreguntas}
+            onChange={(e) => setNumeroPreguntas(e.target.value)}
+            min="1"
+            required
+          />
         </div>
 
         <div className="form-group">
-          <label>
-            ¿Randomizar el orden de las preguntas?
-            <input
-              type="checkbox"
-              checked={randomizarPreguntas}
-              onChange={(e) => setRandomizarPreguntas(e.target.checked)}
-            />
-          </label>
+          <label>¿Randomizar el orden de las preguntas?</label>
+          <input
+            type="checkbox"
+            checked={randomizarPreguntas}
+            onChange={(e) => setRandomizarPreguntas(e.target.checked)}
+          />
         </div>
 
         <div className="form-group">
-          <label>
-            ¿Randomizar el orden de las opciones?
-            <input
-              type="checkbox"
-              checked={randomizarOpciones}
-              onChange={(e) => setRandomizarOpciones(e.target.checked)}
-            />
-          </label>
+          <label>¿Randomizar el orden de las opciones?</label>
+          <input
+            type="checkbox"
+            checked={randomizarOpciones}
+            onChange={(e) => setRandomizarOpciones(e.target.checked)}
+          />
         </div>
 
         <div className="form-group">
