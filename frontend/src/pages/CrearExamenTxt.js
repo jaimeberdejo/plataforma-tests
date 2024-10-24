@@ -51,16 +51,24 @@ const CrearExamenTxt = () => {
           b) Madrid{"\n"}
           c) París *{"\n"} 
           d) Roma{"\n"}
-          {"\n"}
+          Explicación: París es la capital de Francia.{"\n\n"}
           Pregunta: ¿Cuántos continentes hay en el mundo?{"\n"}
           a) 4{"\n"}
-          b) 6{"\n"}
-          c) 7 *{"\n"} {/* Asterisco (*) indica la respuesta correcta */}
+          b) 5{"\n"}
+          c) 6 *{"\n"} 
+          Explicación: Hay 7 continentes en el mundo.{"\n\n"}
+          Pregunta: ¿Cuál es el planeta más grande del sistema solar?{"\n"}
+          a) Marte{"\n"}
+          b) Júpiter *{"\n"}
+          c) Saturno{"\n"}
+          d) Neptuno{"\n"}
+          e) Tierra{"\n"}
         </pre>
-        <p>El asterisco (*) debe estar junto a la opción correcta.</p>
+        <p>El asterisco (*) debe estar junto a la opción correcta. La "Explicación" es opcional y puede incluirse después de cada pregunta.</p>
       </div>
     </div>
   );
 };
 
 export default CrearExamenTxt;
+

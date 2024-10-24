@@ -13,6 +13,9 @@ import EditarPregunta from './pages/EditarPregunta';  // Página para editar una
 import RealizarExamen from './pages/RealizarExamen';  // Página para realizar un examen
 import Resultado from './pages/Resultado';  // Página para corregir un examen
 import Header from './components/Header';  // Importa el encabezado
+import Login from './pages/Login';  // Página de inicio de sesión
+import Register from './pages/Register';  // Página de registro
+
 import './App.css';  // Importa los estilos
 
 const App = () => {
@@ -32,6 +35,8 @@ const App = () => {
             <Route path="/examenes/:examenId/editar-pregunta/:preguntaId" element={<EditarPregunta />} />  {/* Editar una pregunta */}
             <Route path="/examenes/:examenId/realizar" element={<RealizarExamen />} />  {/* Realizar un examen */}
             <Route path="/examenes/:examenId/resultado" element={<Resultado />} />  {/* Corrección de un examen */}
+            <Route path="/login" element={<Login />} />  {/* Página de inicio de sesión */}
+            <Route path="/register" element={<Register />} />  {/* Página de registro */}
           </Routes>
         </main>
       </div>

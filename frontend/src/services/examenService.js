@@ -46,7 +46,7 @@ export const deleteExamen = async (id) => {
 export const getPreguntasByExamen = async (examenId) => {
   try {
     const response = await axios.get(`http://localhost:8000/gestion/api/examenes/${examenId}/preguntas`);
-    return response; // Asegúrate de que estás devolviendo los datos de la API correctamente
+    return response; 
   } catch (error) {
     console.error("Error al obtener las preguntas:", error);
     return { data: [] }; // Devuelve un array vacío en caso de error
@@ -65,7 +65,7 @@ export const enviarRespuestas = async (examenId, respuestasJSON) => {
   try {
     const response = await axios.post(`http://localhost:8000/gestion/api/examenes/${examenId}/resultados/`, respuestasJSON, {
       headers: {
-        'Content-Type': 'application/json',  // Asegúrate de que el contenido sea JSON
+        'Content-Type': 'application/json', 
       },
     });
     return response.data;
@@ -78,7 +78,7 @@ export const enviarRespuestas = async (examenId, respuestasJSON) => {
 
 
 export const uploadTxtExamen = async (formData) => {
-  return axios.post('/gestion/api/examenes/upload-txt/', formData, {
+  return axios.post('http://localhost:8000/gestion/api/uploadtxt/', formData, {
     headers: {
       'Content-Type': 'multipart/form-data',
     },

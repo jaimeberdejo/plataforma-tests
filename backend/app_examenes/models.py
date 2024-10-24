@@ -1,6 +1,30 @@
 from django.db import models
+from django.contrib.auth.models import AbstractUser
 
 
+class Usuario(AbstractUser):
+    es_profesor = models.BooleanField(default=False, help_text="Indica si el usuario es profesor.")
+    es_alumno = models.BooleanField(default=False, help_text="Indica si el usuario es alumno.")
+    
+    # Evitar conflicto con los campos de Django para grupos y permisos
+    groups = models.ManyToManyField(
+        'auth.Group',
+        related_name='custom_usuario_set',  # Usar related_name para evitar conflicto
+        blank=True,
+        help_text='The groups this user belongs to.',
+        verbose_name='groups'
+    )
+
+    user_permissions = models.ManyToManyField(
+        'auth.Permission',
+        related_name='custom_usuario_set',  # Usar related_name para evitar conflicto
+        blank=True,
+        help_text='Specific permissions for this user.',
+        verbose_name='user permissions'
+    )
+    
+    def __str__(self):
+        return self.username
 
 #Modelo Examen
 class Examen(models.Model):
@@ -10,7 +34,7 @@ class Examen(models.Model):
     randomizar_opciones = models.BooleanField(default=False)  # Si se randomizan las respuestas
     preguntas_por_pagina = models.IntegerField(default=1)  # Preguntas por página
     numero_preguntas = models.IntegerField(default=10)  # Número de preguntas a mostrar en la realización del examen
-
+    creado_por = models.ForeignKey(Usuario, on_delete=models.CASCADE)  # Examen asignado a un usuario
 
     def __str__(self):
         return self.nombre
@@ -44,3 +68,5 @@ class Resultado(models.Model):
 
     def __str__(self):
         return f"Resultado del examen {self.examen.nombre} - {self.puntaje} puntos"
+    
+    

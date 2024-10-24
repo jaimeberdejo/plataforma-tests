@@ -1,0 +1,95 @@
+/* src/pages/Auth.css */
+
+.auth-container {
+    max-width: 500px;
+    margin: 0 auto;
+    background-color: #f9f9f9;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .auth-container h2 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+  }
+  
+  .auth-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .form-group {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .form-group label {
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #555;
+  }
+  
+  .form-group input[type="text"],
+  .form-group input[type="password"],
+  .form-group select {
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+  }
+  
+  .auth-btn {
+    padding: 12px 20px;
+    background-color: #28a745;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .auth-btn:hover {
+    background-color: #218838;
+  }
+  
+  .error-message {
+    color: #dc3545;
+    text-align: center;
+  }
+  
+  .role-explanation {
+    background-color: #e9ecef;
+    padding: 15px;
+    border-radius: 10px;
+    margin-top: 20px;
+  }
+  
+  .role-explanation h3 {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .role-card {
+    background-color: white;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 15px;
+  }
+  
+  .role-card h4 {
+    color: #007bff;
+    margin-bottom: 10px;
+  }
+  
+  .role-card p {
+    margin: 0;
+    font-size: 14px;
+    color: #555;
+  }
+  
