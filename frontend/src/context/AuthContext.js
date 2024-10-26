@@ -6,28 +6,48 @@ export const AuthContext = createContext();
 
 // Proveedor del contexto
 export const AuthProvider = ({ children }) => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);  // Estado de autenticación
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [userRole, setUserRole] = useState(null);
+  const [userId, setUserId] = useState(null);
 
   useEffect(() => {
-    // Aquí podrías comprobar el token en localStorage o cualquier otro método de autenticación
-    const token = localStorage.getItem('authToken');
+    const token = localStorage.getItem('token');
+    const storedRole = localStorage.getItem('role');
+    const storedUserId = localStorage.getItem('user_id');
+    console.log('Token en localStorage:', token);
+    console.log('ROL en localstorage:', storedRole);
+    console.log('user id en localstorage:', storedUserId);
+
     if (token) {
-      setIsAuthenticated(true);  // Si hay un token, el usuario está autenticado
+      setIsAuthenticated(true);
+      setUserRole(storedRole);
+      setUserId(storedUserId);
     }
   }, []);
 
-  const login = (token) => {
-    localStorage.setItem('authToken', token);
+  const login = (token, role, user_id) => {
+    localStorage.setItem('token', token);
+    localStorage.setItem('role', role);
+    localStorage.setItem('user_id', user_id);
+    console.log('Token y rol guardados en localStorage. Usuario autenticado como:', role);
     setIsAuthenticated(true);
+    setUserRole(role);
+    setUserId(user_id);
   };
 
   const logout = () => {
-    localStorage.removeItem('authToken');
+    localStorage.removeItem('token');
+    localStorage.removeItem('role');
+    localStorage.removeItem('user_id');
     setIsAuthenticated(false);
+    setUserRole(null);
+    setUserId(null);
+    console.log('Usuario desconectado y token, rol y user_id eliminados de localStorage');
+    
   };
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated, login, logout }}>
+    <AuthContext.Provider value={{ isAuthenticated, userRole, userId, login, logout }}>
       {children}
     </AuthContext.Provider>
   );

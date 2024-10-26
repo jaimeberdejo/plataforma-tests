@@ -1,82 +1,75 @@
 /* src/components/Header.css */
 
 .header {
-  background-color: #343a40;  /* Fondo oscuro */
-  padding: 20px;  /* Espaciado interno */
-  border-bottom: 2px solid #007bff;  /* Línea inferior azul */
+  background-color: #343a40;
+  padding: 20px;
+  border-bottom: 2px solid #007bff;
 }
 
 .header nav {
   display: flex;
-  justify-content: space-between;  /* Espacio entre los elementos del menú */
-  align-items: center;  /* Alineación vertical centrada */
+  justify-content: space-between;
+  align-items: center;
 }
 
 .header ul {
-  list-style-type: none;  /* Eliminar viñetas de la lista */
-  display: flex;  /* Mostrar los enlaces en línea */
+  list-style-type: none;
+  display: flex;
+  align-items: center; /* Alinea los elementos verticalmente */
   margin: 0;
   padding: 0;
 }
 
 .header ul li {
-  margin: 0 15px;  /* Espacio entre los elementos de la lista */
+  margin: 0 15px;
 }
 
-.header ul li a, 
+.header ul li a,
 .header ul li button {
-  text-decoration: none;  /* Eliminar subrayado de los enlaces */
-  color: #f8f9fa;  /* Texto blanco */
-  font-size: 18px;  /* Tamaño del texto */
-  font-weight: 500;  /* Peso del texto */
-  background: none;  /* Eliminar fondo predeterminado del botón */
-  border: none;  /* Sin borde */
-  cursor: pointer;  /* Cambiar cursor al pasar sobre el botón */
-  padding: 10px 20px;  /* Espaciado interno */
-  border-radius: 5px;  /* Bordes redondeados */
-  transition: background-color 0.3s ease, color 0.3s ease;  /* Transiciones */
+  text-decoration: none;
+  color: #f8f9fa;
+  font-size: 18px;
+  font-weight: 500;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-family: inherit; /* Asegura la misma fuente */
+  transition: background-color 0.3s ease, color 0.3s ease;
+  display: inline-flex;
+  align-items: center; /* Alinea el texto verticalmente */
 }
 
-.header ul li a:hover, 
+.header ul li a:hover,
 .header ul li button:hover {
-  background-color: #007bff;  /* Fondo azul al pasar el ratón */
-  color: white;  /* Texto blanco */
+  background-color: #007bff;
+  color: white;
 }
 
-/* Botón destacado para "Crear Examen" */
-.highlight {
-  background-color: #197bff;  /* Color de fondo del botón de "Crear Examen" */
-  color: white;  /* Texto blanco */
-  padding: 10px 20px;  /* Espaciado interno */
-  border-radius: 5px;  /* Bordes redondeados */
-  text-decoration: none;  /* Eliminar subrayado */
-  font-weight: bold;  /* Texto en negrita */
-  transition: background-color 0.3s ease, color 0.3s ease;  /* Efecto de transición */
-}
-
-.highlight:hover {
-  background-color: #0056b3;  /* Color de fondo más oscuro al pasar el ratón */
-  color: white;  /* Mantener el texto blanco */
+/* Posición de Cerrar Sesión a la derecha */
+.logout-container {
+  margin-left: auto; /* Empuja el botón de cerrar sesión a la derecha */
 }
 
 /* Botón de "Cerrar Sesión" */
 .logout-button {
-  background-color: #dc3545;  /* Color rojo para el botón de cierre de sesión */
-  color: white;  /* Texto blanco */
+  background-color: #dc3545;
+  color: white;
 }
 
 .logout-button:hover {
-  background-color: #c82333;  /* Rojo más oscuro al pasar el ratón */
+  background-color: #c82333;
 }
 
 /* Botones de "Iniciar Sesión" y "Registrarse" */
-.login-button, 
+.login-button,
 .register-button {
-  background-color: #28a745;  /* Verde para los botones de sesión y registro */
-  color: white;  /* Texto blanco */
+  background-color: #28a745;
+  color: white;
 }
 
-.login-button:hover, 
+.login-button:hover,
 .register-button:hover {
-  background-color: #218838;  /* Verde más oscuro al pasar el ratón */
+  background-color: #218838;
 }

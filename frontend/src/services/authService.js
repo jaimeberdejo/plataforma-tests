@@ -14,12 +14,25 @@ export const registerUser = async (userData) => {
   }
 };
 
-// Iniciar sesión y obtener el token de autenticación
-export const loginUser = async (userData) => {
+
+// Obtener el CSRF token de las cookies
+
+const getCsrfToken = () => {
+  const cookie = document.cookie
+    .split('; ')
+    .find(row => row.startsWith('csrftoken='));
+  return cookie ? cookie.split('=')[1] : null;
+};
+
+export const loginUser = async (credentials) => {
   try {
-    const response = await axios.post(`${API_URL}/login/`, userData);
-    // Guardar el token en localStorage
-    localStorage.setItem('token', response.data.token);
+    const csrfToken = getCsrfToken();
+    const response = await axios.post(`${API_URL}/login/`, credentials, {
+      headers: {
+        'X-CSRFToken': csrfToken,  // Añadir el token CSRF
+      },
+    });
+    console.log('TOKEN RECIBIDO (authService):', response.data);  // Verifica el token CSRF
     return response.data;
   } catch (error) {
     throw error;

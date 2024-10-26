@@ -46,8 +46,6 @@ class ExamenSerializer(serializers.ModelSerializer):
     class Meta:
         model = Examen
         fields = '__all__'
-        read_only_fields = ['creado_por']
-
         
     
 class ResultadoSerializer(serializers.ModelSerializer):
@@ -65,14 +63,12 @@ class UsuarioSerializer(serializers.ModelSerializer):
 class UsuarioSerializer(serializers.ModelSerializer):
     class Meta:
         model = Usuario
-        fields = ['id', 'username', 'es_profesor', 'es_alumno', 'password']
+        fields = ['id', 'username', 'es_profesor', 'es_alumno', 'password', 'alumnos_asignados']
     
-
     def create(self, validated_data):
         # Sobrescribir el método `create` para gestionar la creación del usuario con su contraseña
         user = Usuario(
             username=validated_data['username'],
-            email=validated_data['email'],
             es_profesor=validated_data.get('es_profesor', False),
             es_alumno=validated_data.get('es_alumno', False),
             password=validated_data['password']

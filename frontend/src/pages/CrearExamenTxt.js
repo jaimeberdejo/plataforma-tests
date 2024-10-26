@@ -1,11 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { uploadTxtExamen } from '../services/examenService';  // Servicio para cargar archivo
+import { uploadTxtExamen } from '../services/examenService'; // Servicio para cargar archivo
+import { AuthContext } from '../context/AuthContext'; // Importar el contexto de autenticación
 import './CrearExamenTxt.css';
 
 const CrearExamenTxt = () => {
-  const [archivo, setArchivo] = useState(null);  // Estado para almacenar el archivo seleccionado
+  const [archivo, setArchivo] = useState(null);
   const navigate = useNavigate();
+  const { userId } = useContext(AuthContext); // Obtener userId del contexto
 
   const handleFileChange = (e) => {
     setArchivo(e.target.files[0]);
@@ -20,11 +22,12 @@ const CrearExamenTxt = () => {
     }
 
     const formData = new FormData();
-    formData.append('archivo_txt', archivo);  // Adjunta el archivo al FormData
+    formData.append('archivo_txt', archivo); // Adjunta el archivo
+    formData.append('user_id', userId); // Incluye el ID del creador
 
     try {
-      await uploadTxtExamen(formData);  // Llamada al servicio que maneja la carga del archivo
-      navigate('/examenes');  // Redirige a la lista de exámenes tras la creación
+      await uploadTxtExamen(formData);
+      navigate('/examenes');
     } catch (error) {
       console.error('Error al cargar el archivo:', error);
     }
@@ -71,4 +74,3 @@ const CrearExamenTxt = () => {
 };
 
 export default CrearExamenTxt;
-

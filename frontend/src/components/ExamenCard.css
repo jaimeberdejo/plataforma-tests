@@ -1,57 +1,69 @@
 /* src/components/ExamenCard.css */
 
 .examen-card {
-  background-color: #f9f9f9;    /* Fondo de la tarjeta */
-  border: 1px solid #ddd;       /* Borde sutil */
-  border-radius: 8px;           /* Bordes redondeados */
-  padding: 20px;                /* Espaciado interno */
-  margin: 20px auto;            /* Márgenes automáticos para centrar la tarjeta */
-  max-width: 800px;             /* Ancho máximo de la tarjeta */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);  /* Sombra para efecto de profundidad */
-  transition: transform 0.2s ease-in-out;    /* Animación suave al pasar el mouse */
+  background-color: #ffffff;                 /* Fondo de la tarjeta en blanco */
+  border: 1px solid #e0e0e0;                 /* Borde sutil */
+  border-radius: 10px;                       /* Bordes redondeados suaves */
+  padding: 20px;                             /* Espaciado interno */
+  margin: 20px auto;                         /* Centramos la tarjeta */
+  max-width: 800px;                          /* Ancho máximo de la tarjeta */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1); /* Sombra suave */
+  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Animación al pasar el mouse */
 }
 
 .examen-card:hover {
-  transform: translateY(-5px);  /* Efecto de levantar la tarjeta al pasar el mouse */
+  transform: translateY(-5px);               /* Levanta ligeramente al pasar el mouse */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15); /* Sombra más pronunciada */
 }
 
 .examen-card h3 {
-  font-size: 1.5rem;            /* Tamaño de la fuente para el título */
-  margin-bottom: 10px;          /* Espaciado debajo del título */
-  color: #333;                  /* Color del texto del título */
+  font-size: 1.8rem;                         /* Título más grande */
+  margin-bottom: 12px;                       /* Espaciado debajo del título */
+  color: #333333;                            /* Color del título */
 }
 
 .examen-card p {
-  font-size: 1rem;              /* Tamaño de la fuente para la descripción */
-  color: #666;                  /* Color del texto de la descripción */
-  margin-bottom: 20px;          /* Espaciado debajo de la descripción */
+  font-size: 1rem;                           /* Tamaño de fuente de la descripción */
+  color: #666666;                            /* Color de la descripción */
+  margin-bottom: 20px;                       /* Espaciado debajo de la descripción */
+  line-height: 1.6;                          /* Espacio entre líneas */
 }
 
 .actions {
-  display: flex;                /* Botones alineados horizontalmente */
-  gap: 10px;                    /* Separación entre los botones */
+  display: flex;                             /* Alineación horizontal de los botones */
+  flex-wrap: wrap;                           /* Permite que los botones se ajusten en varias líneas */
+  gap: 10px;                                 /* Separación entre botones */
 }
 
 .actions .btn {
-  background-color: #007bff;    /* Color de fondo de los botones normales */
-  color: white;                 /* Color del texto del botón */
-  padding: 10px 15px;           /* Relleno interno de los botones */
-  border: none;                 /* Sin borde */
-  border-radius: 4px;           /* Bordes ligeramente redondeados */
-  text-decoration: none;        /* Eliminar subrayado de los enlaces */
-  font-size: 1rem;              /* Tamaño de la fuente de los botones */
-  cursor: pointer;              /* Cambiar el cursor al pasar sobre el botón */
-  transition: background-color 0.3s ease;  /* Animación suave al cambiar de color */
+  background-color: #007bff;                 /* Color de fondo para botones */
+  color: #ffffff;                            /* Color del texto del botón */
+  padding: 10px 15px;                        /* Relleno de los botones */
+  border: none;                              /* Sin borde */
+  border-radius: 6px;                        /* Bordes redondeados */
+  text-decoration: none;                     /* Sin subrayado en los enlaces */
+  font-size: 1rem;                           /* Tamaño de fuente */
+  cursor: pointer;                           /* Cambia el cursor al pasar */
+  transition: background-color 0.3s ease, box-shadow 0.3s ease; /* Suaviza el cambio de color */
 }
 
 .actions .btn:hover {
-  background-color: #0056b3;    /* Color de fondo al pasar el mouse por el botón normal */
+  background-color: #0056b3;                 /* Color de fondo en hover */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);  /* Sombra en hover */
 }
 
 .actions .delete-button {
-  background-color: #dc3545;    /* Color de fondo rojo para el botón de eliminar */
+  background-color: #dc3545;                 /* Color para el botón de eliminar */
 }
 
 .actions .delete-button:hover {
-  background-color: #c82333;    /* Color más oscuro al pasar el mouse por el botón de eliminar */
+  background-color: #c82333;                 /* Color en hover para el botón de eliminar */
+}
+
+.actions .btn.stats-button {
+  background-color: #28a745;                 /* Color para el botón de estadísticas */
+}
+
+.actions .btn.stats-button:hover {
+  background-color: #218838;                 /* Color de hover para estadísticas */
 }

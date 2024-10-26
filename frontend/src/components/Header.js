@@ -1,13 +1,17 @@
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
-import { AuthContext } from '../context/AuthContext';  // Importa el AuthContext
+import { AuthContext } from '../context/AuthContext';
+import { useNavigate } from 'react-router-dom';
+
 import './Header.css';
 
 const Header = () => {
-  const { isAuthenticated, logout } = useContext(AuthContext);  // Obtén el estado de autenticación y la función de logout
+  const { isAuthenticated, userRole, logout } = useContext(AuthContext);
+  const navigate = useNavigate(); // Declara navigate con useNavigate
 
   const handleLogout = () => {
-    logout();  // Llama a la función logout para cerrar sesión
+    logout();
+    navigate('/'); // Redirige a la página de inicio
   };
 
   return (
@@ -15,16 +19,40 @@ const Header = () => {
       <nav>
         <ul>
           <li><Link to="/">Inicio</Link></li>
-          {isAuthenticated ? (
+
+          {isAuthenticated && userRole === 'profesor' && (
             <>
               <li><Link to="/examenes">Exámenes</Link></li>
-              <li><Link to="/crear-examen" className="highlight">Crear Examen</Link></li>
-              <li><button onClick={handleLogout} className="logout-button">Cerrar Sesión</button></li>
+              <li><Link to="/alumnos">Alumnos</Link></li>
+              <li className="logout-container">
+                <button onClick={handleLogout} className="logout-button">Cerrar Sesión</button>
+              </li>
             </>
-          ) : (
+          )}
+
+          {isAuthenticated && userRole === 'alumno' && (
             <>
-              <li><Link to="/login">Iniciar Sesión</Link></li>
-              <li><Link to="/register">Registrarse</Link></li>
+              <li><Link to="/examenes-asignados">Exámenes</Link></li>
+              <li className="logout-container">
+                <button onClick={handleLogout} className="logout-button">Cerrar Sesión</button>
+              </li>
+            </>
+          )}
+
+          {isAuthenticated && userRole === 'independiente' && (
+            <>
+              <li><Link to="/examenes">Exámenes</Link></li>
+              <li><Link to="/crear-examen">Crear Examen</Link></li>
+              <li className="logout-container">
+                <button onClick={handleLogout} className="logout-button">Cerrar Sesión</button>
+              </li>
+            </>
+          )}
+
+          {!isAuthenticated && (
+            <>
+              <li><Link to="/login" className="login-button">Iniciar Sesión</Link></li>
+              <li><Link to="/register" className="register-button">Registrarse</Link></li>
             </>
           )}
         </ul>

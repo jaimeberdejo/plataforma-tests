@@ -1,11 +1,11 @@
-// src/pages/Login.js
-
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { loginUser } from '../services/authService';  // Asegúrate de implementar esta función en tu servicio
-import './Auth.css';  // El CSS será compartido para Login y Register
+import { loginUser } from '../services/authService';
+import { AuthContext } from '../context/AuthContext';
+import './Auth.css';
 
 const Login = () => {
+  const { login } = useContext(AuthContext);  // Obtiene la función login del contexto
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
@@ -15,10 +15,22 @@ const Login = () => {
     e.preventDefault();
 
     try {
-      await loginUser({ username, password });
-      navigate('/');  // Redirigir a la página principal después de iniciar sesión
+        const response = await loginUser({ username, password });
+        const token = response.token;
+        const role = response.role;
+        const user_id = response.user_id;
+        console.log('Token recibido en Login.js:', token);  
+        console.log('Rol recibido en Login.js:', role);
+        console.log('user_id recibido en Login.js:', user_id);  
+      if (token) {
+        login(token, role, user_id);  // Llama a la función login con el token
+        navigate('/');
+      } else {
+        console.log('Error: No se recibió un token');  // Si el token no se recibe
+      }
     } catch (err) {
       setError('Credenciales incorrectas. Inténtalo de nuevo.');
+      console.log('Error en loginUser desde Login.js:', err);  // Captura el error
     }
   };
 

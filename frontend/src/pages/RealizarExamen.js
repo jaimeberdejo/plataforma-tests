@@ -1,11 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { getPreguntasByExamen, enviarRespuestas, getExamenById } from '../services/examenService';
+import { AuthContext } from '../context/AuthContext';
 import './RealizarExamen.css';
 
 const RealizarExamen = () => {
   const { examenId } = useParams();
   const navigate = useNavigate();
+  const { userId, userRole } = useContext(AuthContext); // Obtener ID y rol del usuario desde el contexto
 
   const [preguntas, setPreguntas] = useState([]);
   const [respuestas, setRespuestas] = useState({});
@@ -14,38 +16,39 @@ const RealizarExamen = () => {
   const [loading, setLoading] = useState(true);
   const [randomizarPreguntas, setRandomizarPreguntas] = useState(false);
   const [randomizarOpciones, setRandomizarOpciones] = useState(false);
-  const [numeroPreguntas, setNumeroPreguntas] = useState(10);  // Nuevo estado para el número de preguntas
+  const [numeroPreguntas, setNumeroPreguntas] = useState(10);
+  const [tiempoEmpleado, setTiempoEmpleado] = useState(0);
 
   useEffect(() => {
     const fetchExamenData = async () => {
       try {
         const examenData = await getExamenById(examenId);
-
         if (examenData) {
           setPreguntasPorPagina(examenData.preguntas_por_pagina || 1);
-          setRandomizarPreguntas(examenData.randomizar_preguntas);
-          setRandomizarOpciones(examenData.randomizar_opciones);
-          setNumeroPreguntas(examenData.numero_preguntas || 10);  // Establecer el número de preguntas
+          setRandomizarPreguntas(examenData.randomizar_preguntas || false);
+          setRandomizarOpciones(examenData.randomizar_opciones || false);
+          setNumeroPreguntas(examenData.numero_preguntas || 10);
         }
 
         const response = await getPreguntasByExamen(examenId);
-        let preguntasObtenidas = response.data;
+        let preguntasObtenidas = response;
 
-        if (randomizarPreguntas) {
-          preguntasObtenidas = mezclarArray(preguntasObtenidas);
+        if (preguntasObtenidas.length > 0) {
+          if (randomizarPreguntas) {
+            preguntasObtenidas = mezclarArray(preguntasObtenidas);
+          }
+
+          if (randomizarOpciones) {
+            preguntasObtenidas = preguntasObtenidas.map((pregunta) => ({
+              ...pregunta,
+              opciones: pregunta.opciones ? mezclarArray(pregunta.opciones) : [],
+            }));
+          }
+
+          setPreguntas(preguntasObtenidas.slice(0, numeroPreguntas));
+        } else {
+          setPreguntas([]);
         }
-
-        if (randomizarOpciones) {
-          preguntasObtenidas = preguntasObtenidas.map((pregunta) => ({
-            ...pregunta,
-            opciones: mezclarArray(pregunta.opciones),
-          }));
-        }
-
-        // Limitar las preguntas al número establecido en `numero_preguntas`
-        preguntasObtenidas = preguntasObtenidas.slice(0, numeroPreguntas);
-
-        setPreguntas(preguntasObtenidas);
         setLoading(false);
       } catch (error) {
         console.error('Error al obtener los datos del examen o las preguntas:', error);
@@ -55,6 +58,13 @@ const RealizarExamen = () => {
 
     fetchExamenData();
   }, [examenId, randomizarPreguntas, randomizarOpciones, numeroPreguntas]);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setTiempoEmpleado((prev) => prev + 1);
+    }, 1000);
+    return () => clearInterval(interval);
+  }, []);
 
   const mezclarArray = (array) => {
     for (let i = array.length - 1; i > 0; i--) {
@@ -67,33 +77,33 @@ const RealizarExamen = () => {
   const totalPaginas = Math.ceil(preguntas.length / preguntasPorPagina);
 
   const handleSelectRespuesta = (preguntaId, opcionId) => {
-    setRespuestas({
-      ...respuestas,
+    setRespuestas((prevRespuestas) => ({
+      ...prevRespuestas,
       [preguntaId]: opcionId,
-    });
+    }));
   };
 
   const handleNextPage = () => {
     if (paginaActual < totalPaginas) {
-      setPaginaActual(paginaActual + 1);
+      setPaginaActual((prev) => prev + 1);
     }
   };
 
   const handlePreviousPage = () => {
     if (paginaActual > 1) {
-      setPaginaActual(paginaActual - 1);
+      setPaginaActual((prev) => prev - 1);
     }
   };
 
   const handleSubmitExamen = async () => {
-    const tiempoEmpleado = 180;
-
     const respuestasCompletas = {};
     preguntas.forEach((pregunta) => {
       respuestasCompletas[pregunta.id] = respuestas[pregunta.id] || null;
     });
 
     const respuestasJSON = {
+      examen: examenId,
+      usuario_id:  userId, 
       respuestas: respuestasCompletas,
       tiempo_empleado: tiempoEmpleado,
     };
@@ -121,11 +131,13 @@ const RealizarExamen = () => {
   return (
     <div className="realizar-examen-container">
       <h2>Realizando Examen</h2>
+      <p>Tiempo empleado: {Math.floor(tiempoEmpleado / 60)}:{(tiempoEmpleado % 60).toString().padStart(2, '0')}</p>
+
       {preguntasPaginaActual.map((pregunta) => (
         <div key={pregunta.id} className="pregunta-card">
           <h3>{pregunta.texto}</h3>
           <ul className="opciones-list">
-            {pregunta.opciones.map((opcion) => (
+            {pregunta.opciones?.map((opcion) => (
               <li key={opcion.id}>
                 <label>
                   <input
@@ -158,3 +170,4 @@ const RealizarExamen = () => {
 };
 
 export default RealizarExamen;
+

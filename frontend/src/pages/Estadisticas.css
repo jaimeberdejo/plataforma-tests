@@ -1,0 +1,41 @@
+/* src/pages/Estadisticas.css */
+.estadisticas-container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .resultados-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+  }
+  
+  .resultados-table th,
+  .resultados-table td {
+    padding: 12px;
+    border-bottom: 1px solid #ddd;
+    text-align: center;
+  }
+  
+  .resultados-table th {
+    background-color: #007bff;
+    color: white;
+  }
+  
+  .detalle-btn {
+    background-color: #28a745;
+    color: white;
+    padding: 8px 12px;
+    border-radius: 4px;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+  }
+  
+  .detalle-btn:hover {
+    background-color: #218838;
+  }
+  

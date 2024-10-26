@@ -1,65 +1,111 @@
 /* src/styles/Home.css */
 
 .home-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    background-color: #f4f4f9;
-  }
-  
-  .home-content {
-    text-align: center;
-    background-color: #ffffff;
-    padding: 50px;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  }
-  
-  .home-content h1 {
-    font-size: 36px;
-    margin-bottom: 20px;
-  }
-  
-  .home-content p {
-    font-size: 18px;
-    margin-bottom: 40px;
-    color: #555;
-  }
-  
-  .create-exam-button {
-    display: inline-block;
-    background-color: #007bff;
-    color: white;
-    padding: 15px 30px;
-    text-decoration: none;
-    border-radius: 5px;
-    font-size: 18px;
-    transition: background-color 0.3s;
-  }
-  
-  .create-exam-button:hover {
-    background-color: #0056b3;
-  }
-  
-  .auth-buttons {
-    display: flex;
-    gap: 20px;
-    justify-content: center;
-    margin-top: 20px;
-  }
-  
-  .auth-button {
-    padding: 10px 20px;
-    background-color: #007bff;
-    color: white;
-    text-decoration: none;
-    border-radius: 5px;
-    font-size: 16px;
-    transition: background-color 0.3s ease;
-  }
-  
-  .auth-button:hover {
-    background-color: #0056b3;
-  }
-  
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #f0f2f5;
+  padding: 20px;
+}
+
+.home-content {
+  text-align: center;
+  background-color: #ffffff;
+  padding: 40px 60px;
+  border-radius: 12px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  max-width: 500px;
+  width: 100%;
+}
+
+.home-content h1 {
+  font-size: 32px;
+  margin-bottom: 16px;
+  color: #333;
+}
+
+.home-content p {
+  font-size: 16px;
+  color: #555;
+  margin-bottom: 30px;
+  line-height: 1.5;
+}
+
+/* Botones principales */
+.manage-exams-button,
+.manage-students-button {
+  display: inline-block;
+  width: 100%;
+  background-color: #007bff;
+  color: white;
+  padding: 14px 0;
+  text-decoration: none;
+  border-radius: 6px;
+  font-size: 18px;
+  font-weight: 600;
+  margin: 10px 0;
+  transition: background-color 0.3s ease;
+}
+
+.manage-exams-button:hover {
+  background-color: #0056b3;
+}
+
+.manage-students-button {
+  background-color: #28a745;
+}
+
+.manage-students-button:hover {
+  background-color: #218838;
+}
+
+/* Estilos para botones adicionales según roles */
+.create-exam-button,
+.exam-list-button,
+.stats-button {
+  display: inline-block;
+  background-color: #007bff;
+  color: white;
+  padding: 12px 24px;
+  text-decoration: none;
+  border-radius: 6px;
+  font-size: 16px;
+  margin: 10px 5px;
+  transition: background-color 0.3s ease;
+}
+
+.create-exam-button:hover,
+.exam-list-button:hover,
+.stats-button:hover {
+  background-color: #0056b3;
+}
+
+.stats-button {
+  background-color: #17a2b8;
+}
+
+.stats-button:hover {
+  background-color: #117a8b;
+}
+
+.auth-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.auth-button {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  text-decoration: none;
+  border-radius: 6px;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+
+.auth-button:hover {
+  background-color: #0056b3;
+}

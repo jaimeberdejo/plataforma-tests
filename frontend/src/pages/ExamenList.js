@@ -1,25 +1,34 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import ExamenCard from '../components/ExamenCard';
-import { getExamenes, deleteExamen } from '../services/examenService'; 
-import { Link } from 'react-router-dom'; 
+import { getExamenesByUser, deleteExamen } from '../services/examenService';
+import { Link } from 'react-router-dom';
+import { AuthContext } from '../context/AuthContext';
 import './ExamenList.css';
 
 const ExamenList = () => {
   const [examenes, setExamenes] = useState([]);
+  const { userRole, userId } = useContext(AuthContext);
 
   useEffect(() => {
     const fetchExamenes = async () => {
-      const data = await getExamenes();
-      setExamenes(data);
+      if (userId) {
+        try {
+          const data = await getExamenesByUser(userId);
+          setExamenes(data);
+        } catch (error) {
+          console.error('Error al obtener los exámenes:', error);
+        }
+      }
     };
     fetchExamenes();
-  }, []);
+  }, [userId]);
 
   const handleDelete = async (id) => {
-    if (window.confirm('¿Estás seguro de que deseas eliminar este examen?')) {
+    const confirmDelete = window.confirm('¿Estás seguro de que deseas eliminar este examen?');
+    if (confirmDelete) {
       try {
         await deleteExamen(id);
-        setExamenes(examenes.filter((examen) => examen.id !== id)); 
+        setExamenes((prevExamenes) => prevExamenes.filter((examen) => examen.id !== id));
       } catch (error) {
         console.error('Error al eliminar el examen:', error);
       }
@@ -29,19 +38,31 @@ const ExamenList = () => {
   return (
     <div className="examen-list">
       <h2>Lista de Exámenes</h2>
-      {examenes.map((examen) => (
-        <ExamenCard key={examen.id} examen={examen} handleDelete={handleDelete} />
-      ))}
+      {examenes.length > 0 ? (
+        examenes.map((examen) => (
+          <ExamenCard
+            key={examen.id}
+            examen={examen}
+            handleDelete={userRole !== 'alumno' ? handleDelete : null}
+          />
+        ))
+      ) : (
+        <p>No se encontraron exámenes.</p>
+      )}
 
-      {/* Contenedor para ambos botones */}
-      <div className="crear-examen-container">
-        <Link to="/crear-examen" className="crear-examen-button">
-          Crear Nuevo Examen
-        </Link>
-        <Link to="/crear-examen-txt" className="crear-examen-txt-button">
-          Crear Examen desde TXT
-        </Link>
-      </div>
+      {/* Mostrar botones de creación de examen según el rol */}
+      {userRole !== 'alumno' && (
+        <div className="crear-examen-container">
+          <Link to="/crear-examen" className="crear-examen-button">
+            Crear Nuevo Examen
+          </Link>
+          {userRole === 'profesor' && (
+            <Link to="/crear-examen-txt" className="crear-examen-txt-button">
+              Crear Examen desde TXT
+            </Link>
+          )}
+        </div>
+      )}
     </div>
   );
 };

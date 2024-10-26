@@ -67,7 +67,7 @@ const Resultado = () => {
       <h2>Resultados del Examen</h2>
       {resultado ? (
         <>
-          <p>Preguntas Correctas: {resultado.puntuacion} de {resultado.total_preguntas}</p>
+          <p>Preguntas Correctas: {resultado.puntuacion} de {resultado.preguntas.length}</p>
           <p>Tiempo empleado: {resultado.tiempo_empleado}</p>
 
           <div className="opciones">

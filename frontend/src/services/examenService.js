@@ -4,12 +4,28 @@ import axios from 'axios';
 
 const API_URL = 'http://127.0.0.1:8000/gestion/api/';
 
+
+
 export const getExamenes = async () => {
-  const response = await axios.get(`${API_URL}examenes/`);
-  return response.data;
+  try {
+    const response = await axios.get(`${API_URL}examenes/`);
+    return response.data;
+  } catch (error) {
+    console.error('Error al obtener los exámenes:', error.response ? error.response.data : error.message);
+    throw error;
+  }
 };
 
 
+export const getExamenesByUser = async (userId) => {
+  try {
+    const response = await axios.get(`${API_URL}examenes/?user_id=${userId}`);
+    return response.data;
+  } catch (error) {
+    console.error('Error al obtener los exámenes:', error.response ? error.response.data : error.message);
+    throw error;
+  }
+};
 
 export const getExamenById = async (id) => {
   try {
@@ -21,34 +37,42 @@ export const getExamenById = async (id) => {
   }
 };
 
-
-
 export const createExamen = async (examenData) => {
   try {
     const response = await axios.post(`${API_URL}examenes/`, examenData);
     return response.data;
   } catch (error) {
-    console.error('Error en la creación del examen:', error.response.data);  // Mostrar detalles del error
+    console.error('Error en la creación del examen:', error.response ? error.response.data : error.message);
     throw error;
   }
 };
 
 export const updateExamen = async (id, examenData) => {
-  const response = await axios.put(`${API_URL}examenes/${id}/`, examenData);
-  return response.data;
+  try {
+    const response = await axios.put(`${API_URL}examenes/${id}/`, examenData);
+    return response.data;
+  } catch (error) {
+    console.error('Error en la actualización del examen:', error.response ? error.response.data : error.message);
+    throw error;
+  }
 };
 
-// Eliminar un examen
 export const deleteExamen = async (id) => {
-  return await axios.delete(`${API_URL}examenes/${id}/`);
+  try {
+    const response = await axios.delete(`${API_URL}examenes/${id}/`);
+    return response.data;
+  } catch (error) {
+    console.error('Error al eliminar el examen:', error.response ? error.response.data : error.message);
+    throw error;
+  }
 };
 
 export const getPreguntasByExamen = async (examenId) => {
   try {
-    const response = await axios.get(`http://localhost:8000/gestion/api/examenes/${examenId}/preguntas`);
-    return response; 
+    const response = await axios.get(`${API_URL}examenes/${examenId}/preguntas`);
+    return response.data;
   } catch (error) {
-    console.error("Error al obtener las preguntas:", error);
+    console.error("Error al obtener las preguntas:", error.response ? error.response.data : error.message);
     return { data: [] }; // Devuelve un array vacío en caso de error
   }
 };
@@ -63,9 +87,9 @@ export const getResultadoExamen = async (resultadoId) => {
 
 export const enviarRespuestas = async (examenId, respuestasJSON) => {
   try {
-    const response = await axios.post(`http://localhost:8000/gestion/api/examenes/${examenId}/resultados/`, respuestasJSON, {
+    const response = await axios.post(`${API_URL}examenes/${examenId}/resultados/`, respuestasJSON, {
       headers: {
-        'Content-Type': 'application/json', 
+        'Content-Type': 'application/json',
       },
     });
     return response.data;
@@ -76,7 +100,6 @@ export const enviarRespuestas = async (examenId, respuestasJSON) => {
 };
 
 
-
 export const uploadTxtExamen = async (formData) => {
   return axios.post('http://localhost:8000/gestion/api/uploadtxt/', formData, {
     headers: {
@@ -84,3 +107,27 @@ export const uploadTxtExamen = async (formData) => {
     },
   });
 };
+
+
+export const getExamenesAsignados = async (alumnoId) => {
+  try {
+    const response = await axios.get(`${API_URL}examenes/examenes-asignados/`, {
+      params: { alumno_id: alumnoId },
+    });
+    return response.data;
+  } catch (error) {
+    console.error('Error al obtener los exámenes asignados:', error);
+    throw error;
+  }
+};
+
+export const getResultadosByExamen = async (examenId) => {
+  try {
+    const response = await axios.get(`${API_URL}examenes/${examenId}/resultados/`);
+    return response.data;
+  } catch (error) {
+    console.error('Error al obtener los resultados del examen:', error);
+    throw error;
+  }
+};
+

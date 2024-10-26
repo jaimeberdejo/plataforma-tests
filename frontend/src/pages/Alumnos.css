@@ -1,0 +1,96 @@
+/* src/styles/Alumnos.css */
+
+.alumnos-container {
+  padding: 20px;
+  max-width: 600px;
+  margin: 0 auto;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.alumnos-container h2 {
+  text-align: center;
+  color: #333;
+  font-size: 1.8em;
+  margin-bottom: 20px;
+  font-weight: 600;
+}
+
+.mensaje {
+  text-align: center;
+  color: #4CAF50;
+  font-size: 1em;
+  font-weight: 500;
+  margin-bottom: 10px;
+}
+
+.alumnos-container ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.alumnos-container li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px;
+  margin: 8px 0;
+  border-radius: 6px;
+  background-color: #ffffff;
+  border: 1px solid #ddd;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.alumnos-container li button {
+  background-color: #e74c3c;
+  border: none;
+  padding: 6px 10px;
+  color: #fff;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s;
+}
+
+.alumnos-container li button:hover {
+  background-color: #c0392b;
+}
+
+.add-alumno-form {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid #ddd;
+}
+
+.add-alumno-form input {
+  flex: 1;
+  padding: 10px;
+  font-size: 1em;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.add-alumno-form input:focus {
+  outline: none;
+  border-color: #4CAF50;
+  box-shadow: 0 0 5px rgba(76, 175, 80, 0.4);
+}
+
+.add-alumno-form button {
+  padding: 10px 16px;
+  background-color: #4CAF50;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 1em;
+  transition: background-color 0.3s;
+}
+
+.add-alumno-form button:hover {
+  background-color: #388E3C;
+}

@@ -73,3 +73,25 @@ textarea {
 .submit-btn:hover {
   background-color: #0056b3;
 }
+
+.alumnos-list {
+  display: flex;
+  flex-direction: column;
+  max-height: 150px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  padding: 10px;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+}
+
+.alumno-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.alumno-item label {
+  margin-left: 8px;
+  font-size: 1em;
+}

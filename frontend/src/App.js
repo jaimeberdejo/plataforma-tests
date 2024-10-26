@@ -1,46 +1,54 @@
-// src/App.js
-
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import Home from './pages/Home';  // Página de inicio
-import ExamenList from './pages/ExamenList';  // Página de lista de exámenes
-import CrearExamen from './pages/CrearExamen';  // Página para crear un examen
-import CrearExamenTxt from './pages/CrearExamenTxt';  // Página para crear un examen desde un archivo .txt
-import EditarExamen from './pages/EditarExamen';  // Página para editar un examen
-import PreguntaList from './pages/PreguntaList';  // Página para listar las preguntas
-import CrearPregunta from './pages/CrearPregunta';  // Página para crear una nueva pregunta
-import EditarPregunta from './pages/EditarPregunta';  // Página para editar una pregunta
-import RealizarExamen from './pages/RealizarExamen';  // Página para realizar un examen
-import Resultado from './pages/Resultado';  // Página para corregir un examen
-import Header from './components/Header';  // Importa el encabezado
-import Login from './pages/Login';  // Página de inicio de sesión
-import Register from './pages/Register';  // Página de registro
+import { AuthProvider } from './context/AuthContext';  // Importa el AuthProvider
+import Home from './pages/Home';
+import ExamenList from './pages/ExamenList';
+import ExamenListAlumnos from './pages/ExamenListAlumnos';
+import CrearExamen from './pages/CrearExamen';
+import CrearExamenTxt from './pages/CrearExamenTxt';
+import EditarExamen from './pages/EditarExamen';
+import PreguntaList from './pages/PreguntaList';
+import CrearPregunta from './pages/CrearPregunta';
+import EditarPregunta from './pages/EditarPregunta';
+import RealizarExamen from './pages/RealizarExamen';
+import Resultado from './pages/Resultado';
+import Header from './components/Header';
+import Login from './pages/login';
+import Register from './pages/Register';
+import Alumnos from './pages/Alumnos';
+import Estadisticas from './pages/Estadisticas';
+import ResultadoDetalle from './pages/ResultadoDetalle';
 
-import './App.css';  // Importa los estilos
+
+import './App.css';
 
 const App = () => {
   return (
-    <Router>
-      <div>
-        <Header />  {/* El encabezado estará presente en todas las páginas */}
+    <AuthProvider>  
+      <Router>
+        <Header />
         <main>
           <Routes>
-            <Route path="/" element={<Home />} />  {/* Página de inicio */}
-            <Route path="/examenes" element={<ExamenList />} />  {/* Lista de exámenes */}
-            <Route path="/crear-examen" element={<CrearExamen />} />  {/* Crear un nuevo examen */}
-            <Route path="/crear-examen-txt" element={<CrearExamenTxt />} />  {/* Crear un examen desde un archivo .txt */}
-            <Route path="/examenes/:id/editar" element={<EditarExamen />} />  {/* Editar un examen */}
-            <Route path="/examenes/:examenId/preguntas" element={<PreguntaList />} />  {/* Lista de preguntas de un examen */}
-            <Route path="/examenes/:examenId/crear-pregunta" element={<CrearPregunta />} />  {/* Crear una nueva pregunta */}
-            <Route path="/examenes/:examenId/editar-pregunta/:preguntaId" element={<EditarPregunta />} />  {/* Editar una pregunta */}
-            <Route path="/examenes/:examenId/realizar" element={<RealizarExamen />} />  {/* Realizar un examen */}
-            <Route path="/examenes/:examenId/resultado" element={<Resultado />} />  {/* Corrección de un examen */}
-            <Route path="/login" element={<Login />} />  {/* Página de inicio de sesión */}
-            <Route path="/register" element={<Register />} />  {/* Página de registro */}
+            <Route path="/" element={<Home />} />
+            <Route path="/examenes" element={<ExamenList />} />
+            <Route path="/examenes-asignados" element={<ExamenListAlumnos />} />
+            <Route path="/crear-examen" element={<CrearExamen />} />
+            <Route path="/crear-examen-txt" element={<CrearExamenTxt />} />
+            <Route path="/examenes/:id/editar" element={<EditarExamen />} />
+            <Route path="/examenes/:examenId/preguntas" element={<PreguntaList />} />
+            <Route path="/examenes/:examenId/crear-pregunta" element={<CrearPregunta />} />
+            <Route path="/examenes/:examenId/editar-pregunta/:preguntaId" element={<EditarPregunta />} />
+            <Route path="/examenes/:examenId/realizar" element={<RealizarExamen />} />
+            <Route path="/examenes/:examenId/resultado" element={<Resultado />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/login" element={<Login />} />     
+            <Route path="/alumnos" element={<Alumnos />} />  
+            <Route path="/examenes/:examenId/estadisticas" element={<Estadisticas />} />  
+            <Route path="/resultados-detalle" element={<ResultadoDetalle />} />
           </Routes>
         </main>
-      </div>
-    </Router>
+      </Router>
+    </AuthProvider>
   );
 };
 

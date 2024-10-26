@@ -1,10 +1,10 @@
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import './Home.css';
-import { AuthContext } from '../context/AuthContext';  // Ahora esta ruta debería funcionar
+import { AuthContext } from '../context/AuthContext';
 
 const Home = () => {
-  const { isAuthenticated } = useContext(AuthContext);  // Accede al estado de autenticación
+  const { isAuthenticated, userRole } = useContext(AuthContext); // Obtén el rol del usuario
 
   return (
     <div className="home-container">
@@ -13,16 +13,44 @@ const Home = () => {
           <>
             <h1>Bienvenido a la Plataforma de Exámenes</h1>
             <p>
-              Esta aplicación te permite crear, realizar y gestionar exámenes tipo test de manera
-              fácil e intuitiva. Crea tus propios exámenes, edita preguntas y revisa los resultados
-              de manera rápida y organizada.
+              Esta aplicación te permite gestionar exámenes tipo test de manera
+              fácil e intuitiva.
             </p>
-            <Link to="/crear-examen" className="create-exam-button">
-              Crear Examen
-            </Link>
+
+            {userRole === 'profesor' && (
+              <div className="profesor-actions">
+                <Link to="/examenes" className="manage-exams-button">
+                  Gestionar Exámenes
+                </Link>
+                <Link to="/alumnos" className="manage-students-button">
+                  Gestionar Alumnos
+                </Link>
+              </div>
+            )}
+
+            {userRole === 'alumno' && (
+              <div className="alumno-actions">
+                <p>Como alumno, puedes realizar los exámenes asignados por tus profesores.</p>
+                <Link to="/examenes-asignados" className="exam-list-button">
+                  Realizar Examen
+                </Link>
+              </div>
+            )}
+
+            {userRole === 'independiente' && (
+              <div className="independiente-actions">
+                <p>Como usuario independiente, puedes crear y realizar exámenes para uso personal.</p>
+                <Link to="/crear-examen" className="create-exam-button">
+                  Crear Examen
+                </Link>
+                <Link to="/examenes" className="exam-list-button">
+                  Ver Mis Exámenes
+                </Link>
+              </div>
+            )}
           </>
         ) : (
-          <>
+          <div className="auth-prompt">
             <h1>Bienvenido a la Plataforma de Exámenes</h1>
             <p>
               Inicia sesión o regístrate para acceder a las funcionalidades de la plataforma.
@@ -35,7 +63,7 @@ const Home = () => {
                 Registrarse
               </Link>
             </div>
-          </>
+          </div>
         )}
       </section>
     </div>
@@ -43,4 +71,3 @@ const Home = () => {
 };
 
 export default Home;
-
