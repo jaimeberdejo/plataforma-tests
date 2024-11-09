@@ -1,37 +1,36 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
 import { getPreguntaById, updatePregunta } from '../services/preguntaService';
 import './PreguntaForm.css';
 
-const EditarPregunta = () => {
-  const { examenId, preguntaId } = useParams();  // Obtener los IDs del examen y la pregunta desde la URL
-  const navigate = useNavigate();
-
-  const [texto, setTexto] = useState('');  // Estado para el texto de la pregunta
-  const [explicacion, setExplicacion] = useState('');  // Estado para la explicación de la respuesta
-  const [opciones, setOpciones] = useState([]);  // Estado para las opciones de respuesta
-  const [respuestaCorrecta, setRespuestaCorrecta] = useState('');  // Estado para la opción correcta
-  const [loading, setLoading] = useState(true);
+const EditarPregunta = ({ pregunta, closeModal, refreshPreguntas }) => {
+  const [texto, setTexto] = useState(pregunta?.texto || '');
+  const [explicacion, setExplicacion] = useState(pregunta?.explicacion || '');
+  const [opciones, setOpciones] = useState(pregunta?.opciones || []);
+  const [respuestaCorrecta, setRespuestaCorrecta] = useState(
+    pregunta?.opciones.find((opcion) => opcion.es_correcta)?.texto || ''
+  );
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const fetchPregunta = async () => {
-      try {
-        const response = await getPreguntaById(preguntaId);  // Obtener la pregunta por su ID
-        const pregunta = response.data;
-        setTexto(pregunta.texto);
-        setExplicacion(pregunta.explicacion || '');  // Cargar la explicación si existe
-        setOpciones(pregunta.opciones);
-        const correcta = pregunta.opciones.find(opcion => opcion.es_correcta);
-        setRespuestaCorrecta(correcta ? correcta.texto : '');
-        setLoading(false);
-      } catch (error) {
-        console.error('Error al cargar la pregunta:', error);
+      if (!pregunta) {
+        setLoading(true);
+        try {
+          const response = await getPreguntaById(pregunta.id);
+          const preguntaData = response.data;
+          setTexto(preguntaData.texto);
+          setExplicacion(preguntaData.explicacion || '');
+          setOpciones(preguntaData.opciones);
+          const correcta = preguntaData.opciones.find((opcion) => opcion.es_correcta);
+          setRespuestaCorrecta(correcta ? correcta.texto : '');
+        } catch (error) {
+          console.error('Error al cargar la pregunta:', error);
+        }
         setLoading(false);
       }
     };
-
     fetchPregunta();
-  }, [preguntaId]);
+  }, [pregunta]);
 
   const handleChangeOpcion = (index, value) => {
     const newOpciones = [...opciones];
@@ -40,15 +39,13 @@ const EditarPregunta = () => {
   };
 
   const addOpcion = () => {
-    setOpciones([...opciones, { texto: '', es_correcta: false }]);  // Añadir nueva opción vacía
+    setOpciones([...opciones, { texto: '', es_correcta: false }]);
   };
 
   const removeOpcion = (index) => {
-    if (opciones.length > 2) {  // Asegurarse de que siempre queden al menos 2 opciones
+    if (opciones.length > 2) {
       const newOpciones = opciones.filter((_, i) => i !== index);
       setOpciones(newOpciones);
-
-      // Si la opción eliminada era la respuesta correcta, reiniciar el campo de respuesta correcta
       if (opciones[index].texto === respuestaCorrecta) {
         setRespuestaCorrecta('');
       }
@@ -57,23 +54,21 @@ const EditarPregunta = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     const opcionesData = opciones.map((opcion) => ({
       texto: opcion.texto,
-      es_correcta: opcion.texto === respuestaCorrecta,  // Marcar la opción correcta
+      es_correcta: opcion.texto === respuestaCorrecta,
     }));
-
     const preguntaData = {
       texto,
-      explicacion,  // Incluir la explicación en los datos enviados
+      explicacion,
       opciones: opcionesData,
-      examen: examenId,  // Asegúrate de que el ID del examen se incluya correctamente
+      examen: pregunta.examen,
     };
 
     try {
-      await updatePregunta(preguntaId, preguntaData);
-      console.log('Datos enviados:', preguntaData);
-      navigate(`/examenes/${examenId}/preguntas`);
+      await updatePregunta(pregunta.id, preguntaData);
+      refreshPreguntas(); // Refresca la lista de preguntas en PreguntaList
+      closeModal(); // Cierra el modal después de guardar
     } catch (error) {
       console.error('Error al actualizar la pregunta:', error);
     }
@@ -106,7 +101,6 @@ const EditarPregunta = () => {
                 onChange={(e) => handleChangeOpcion(index, e.target.value)}
                 required
               />
-              {/* Botón para eliminar opción si hay más de dos */}
               {opciones.length > 2 && (
                 <button
                   type="button"
@@ -139,15 +133,13 @@ const EditarPregunta = () => {
           </select>
         </div>
 
-
         <div className="form-group">
           <label>Explicación (opcional)</label>
           <textarea
             value={explicacion}
-            onChange={(e) => setExplicacion(e.target.value)}  // Manejar el campo de la explicación
+            onChange={(e) => setExplicacion(e.target.value)}
           />
         </div>
-
 
         <button type="submit" className="submit-button">Guardar Cambios</button>
       </form>

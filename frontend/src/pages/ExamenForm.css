@@ -31,7 +31,7 @@ h2 {
 .form-group input[type="text"],
 .form-group textarea,
 .form-group select,
-.form-group input[type="number"] { /* Añadimos input de tipo number aquí */
+.form-group input[type="number"] {
   width: 100%;
   padding: 10px;
   border: 1px solid #ddd;
@@ -40,13 +40,13 @@ h2 {
   color: #333;
 }
 
-.form-group input[type="number"] { /* Estilo adicional para el campo de número */
-  -moz-appearance: textfield; /* Elimina las flechas en Firefox */
+.form-group input[type="number"] {
+  -moz-appearance: textfield;
 }
 
 .form-group input[type="number"]::-webkit-outer-spin-button,
 .form-group input[type="number"]::-webkit-inner-spin-button {
-  -webkit-appearance: none; /* Elimina las flechas en Chrome/Safari */
+  -webkit-appearance: none;
   margin: 0;
 }
 
@@ -88,10 +88,14 @@ textarea {
 .alumno-item {
   display: flex;
   align-items: center;
+  justify-content: flex-start;
   margin-bottom: 8px;
 }
 
+.alumno-item input[type="checkbox"] {
+  margin-right: 8px;
+}
+
 .alumno-item label {
-  margin-left: 8px;
   font-size: 1em;
 }

@@ -4,32 +4,33 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
-  background-color: #f0f2f5;
+  min-height: 90vh;
+  background-color: #e0f0ff; /* Fondo azul claro */
   padding: 20px;
 }
 
 .home-content {
   text-align: center;
-  background-color: #ffffff;
+  background-color: #ffffff; /* Fondo blanco para el contenedor */
   padding: 40px 60px;
-  border-radius: 12px;
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  border-radius: 16px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15); /* Sombra suave */
   max-width: 500px;
   width: 100%;
 }
 
 .home-content h1 {
-  font-size: 32px;
-  margin-bottom: 16px;
-  color: #333;
+  font-size: 36px;
+  margin-bottom: 20px;
+  color: #1d3557; /* Azul oscuro */
+  font-weight: 700;
 }
 
 .home-content p {
-  font-size: 16px;
-  color: #555;
+  font-size: 18px;
+  color: #555555; /* Gris medio */
   margin-bottom: 30px;
-  line-height: 1.5;
+  line-height: 1.6;
 }
 
 /* Botones principales */
@@ -37,58 +38,58 @@
 .manage-students-button {
   display: inline-block;
   width: 100%;
-  background-color: #007bff;
+  background-color: #007aff; /* Azul brillante */
   color: white;
   padding: 14px 0;
   text-decoration: none;
-  border-radius: 6px;
+  border-radius: 8px;
   font-size: 18px;
   font-weight: 600;
   margin: 10px 0;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
 }
 
 .manage-exams-button:hover {
-  background-color: #0056b3;
+  background-color: #005bb5; /* Azul oscuro en hover */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
 .manage-students-button {
-  background-color: #28a745;
+  background-color: #28a745; /* Verde */
 }
 
 .manage-students-button:hover {
-  background-color: #218838;
+  background-color: #218838; /* Verde oscuro */
 }
 
-/* Estilos para botones adicionales según roles */
+/* Botones adicionales */
 .create-exam-button,
 .exam-list-button,
 .stats-button {
   display: inline-block;
-  background-color: #007bff;
+  background-color: #007aff;
   color: white;
   padding: 12px 24px;
   text-decoration: none;
-  border-radius: 6px;
+  border-radius: 8px;
   font-size: 16px;
   margin: 10px 5px;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.create-exam-button:hover,
-.exam-list-button:hover,
-.stats-button:hover {
-  background-color: #0056b3;
-}
+
 
 .stats-button {
-  background-color: #17a2b8;
+  background-color: #17a2b8; /* Color especial */
 }
 
 .stats-button:hover {
   background-color: #117a8b;
 }
 
+/* Botones de autenticación */
 .auth-buttons {
   display: flex;
   justify-content: center;
@@ -98,14 +99,17 @@
 
 .auth-button {
   padding: 10px 20px;
-  background-color: #007bff;
+  background-color: #007aff;
   color: white;
   text-decoration: none;
-  border-radius: 6px;
+  border-radius: 8px;
   font-size: 16px;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .auth-button:hover {
-  background-color: #0056b3;
+  background-color: #005bb5;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
 }
+

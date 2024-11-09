@@ -1,11 +1,11 @@
+// src/pages/CrearExamen.js
 import React, { useState, useContext, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { createExamen } from '../services/examenService';
 import { getAlumnos } from '../services/alumnoService';
 import { AuthContext } from '../context/AuthContext';
 import './ExamenForm.css';
 
-const CrearExamen = () => {
+const CrearExamen = ({ closeModal, refreshExamenes }) => {
   const [nombre, setNombre] = useState('');
   const [descripcion, setDescripcion] = useState('');
   const [randomizarPreguntas, setRandomizarPreguntas] = useState(false);
@@ -14,14 +14,10 @@ const CrearExamen = () => {
   const [numeroPreguntas, setNumeroPreguntas] = useState(10);
   const [alumnos, setAlumnos] = useState([]);
   const [alumnosSeleccionados, setAlumnosSeleccionados] = useState([]);
-  const navigate = useNavigate();
   const { userId, userRole } = useContext(AuthContext);
 
   useEffect(() => {
-    if (userRole !== 'profesor' && userRole !== 'independiente') {
-      navigate('/'); // Redirige a otros roles no autorizados
-    } else if (userRole === 'profesor') {
-      // Cargar alumnos solo para el rol de profesor
+    if (userRole === 'profesor') {
       const fetchAlumnos = async () => {
         try {
           const alumnosData = await getAlumnos(userId);
@@ -32,7 +28,7 @@ const CrearExamen = () => {
       };
       fetchAlumnos();
     }
-  }, [userId, userRole, navigate]);
+  }, [userId, userRole]);
 
   const handleAlumnoChange = (alumnoId) => {
     setAlumnosSeleccionados((prev) =>
@@ -54,8 +50,9 @@ const CrearExamen = () => {
     };
 
     try {
-      const examenCreado = await createExamen(examenData);
-      navigate(`/examenes/${examenCreado.id}/preguntas`);
+      await createExamen(examenData);
+      closeModal(); // Cierra el modal después de la creación
+      refreshExamenes(); // Refresca la lista de exámenes
     } catch (error) {
       console.error('Error al crear el examen:', error);
     }
@@ -137,9 +134,7 @@ const CrearExamen = () => {
             </div>
           </div>
         )}
-        <button type="submit" className="submit-btn">
-          Crear Examen
-        </button>
+        <button type="submit" className="submit-btn">Crear Examen</button>
       </form>
     </div>
   );

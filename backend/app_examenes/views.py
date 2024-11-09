@@ -323,35 +323,37 @@ class LoginView(APIView):
     
     
 class UsuarioViewSet(viewsets.ModelViewSet):
-
+    
     queryset = Usuario.objects.all()
     serializer_class = UsuarioSerializer
+    permission_classes = [AllowAny]  # Permite acceso a todas las acciones sin autenticación
 
-    # Definir permisos basados en la acción
-    def get_permissions(self):
-        if self.action in ['create', 'list']:  # Permitir que cualquiera acceda a la creación o listado de usuarios
-            self.permission_classes = [AllowAny]
-        else:  # Para otras acciones (actualizar, eliminar, etc.), requerir autenticación
-            self.permission_classes = [IsAuthenticated]
-        return super(UsuarioViewSet, self).get_permissions()
-
-    # Sobrescribir el método `perform_create` para gestionar la creación del usuario.
     def perform_create(self, serializer):
         # Crear el usuario
         serializer.save()
 
-    # Opcionalmente, puedes filtrar usuarios por rol si lo necesitas
+    # Filtrar usuarios por rol si lo necesitas
     def get_queryset(self):
         queryset = Usuario.objects.all()
-
-        # Filtrar por profesor, alumno o usuarios independientes (si es necesario)
         role = self.request.query_params.get('role')
         if role == 'profesor':
             queryset = queryset.filter(es_profesor=True)
         elif role == 'alumno':
             queryset = queryset.filter(es_alumno=True)
-
         return queryset
+    
+    @action(detail=True, methods=['put'], url_path='password')
+    def update_password(self, request, pk=None):
+        usuario = self.get_object()
+        current_password = request.data.get("current_password")
+        new_password = request.data.get("new_password")
+
+        if not usuario.check_password(current_password):
+            return Response({"error": "Contraseña actual incorrecta."}, status=status.HTTP_400_BAD_REQUEST)
+        
+        usuario.set_password(new_password)
+        usuario.save()
+        return Response({"mensaje": "Contraseña actualizada correctamente."}, status=status.HTTP_200_OK)
     
     
 
@@ -362,10 +364,7 @@ class AlumnoViewSet(viewsets.ReadOnlyModelViewSet):
         
         
 class ProfesorViewSet(viewsets.ViewSet):
-    """
-    ViewSet para gestionar las acciones de los profesores, incluyendo
-    la asignación y eliminación de alumnos.
-    """
+
 
     def list(self, request):
         """Listar todos los profesores"""

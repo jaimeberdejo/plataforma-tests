@@ -11,7 +11,7 @@ const Home = () => {
       <section className="home-content">
         {isAuthenticated ? (
           <>
-            <h1>Bienvenido a la Plataforma de Exámenes</h1>
+            <h1>Bienvenido a la Plataforma de gestión de Exámenes</h1>
             <p>
               Esta aplicación te permite gestionar exámenes tipo test de manera
               fácil e intuitiva.
@@ -32,7 +32,7 @@ const Home = () => {
               <div className="alumno-actions">
                 <p>Como alumno, puedes realizar los exámenes asignados por tus profesores.</p>
                 <Link to="/examenes-asignados" className="exam-list-button">
-                  Realizar Examen
+                  Ver Exámenes
                 </Link>
               </div>
             )}
@@ -51,7 +51,7 @@ const Home = () => {
           </>
         ) : (
           <div className="auth-prompt">
-            <h1>Bienvenido a la Plataforma de Exámenes</h1>
+            <h1>Bienvenido a la Plataforma de gestión de Exámenes</h1>
             <p>
               Inicia sesión o regístrate para acceder a las funcionalidades de la plataforma.
             </p>

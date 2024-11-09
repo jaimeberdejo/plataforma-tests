@@ -1,17 +1,17 @@
 import React, { useContext } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
-import { useNavigate } from 'react-router-dom';
+import UserArea from './UserArea';  // Asegúrate de importar UserArea
 
 import './Header.css';
 
 const Header = () => {
   const { isAuthenticated, userRole, logout } = useContext(AuthContext);
-  const navigate = useNavigate(); // Declara navigate con useNavigate
+  const navigate = useNavigate();
 
   const handleLogout = () => {
     logout();
-    navigate('/'); // Redirige a la página de inicio
+    navigate('/');
   };
 
   return (
@@ -24,8 +24,8 @@ const Header = () => {
             <>
               <li><Link to="/examenes">Exámenes</Link></li>
               <li><Link to="/alumnos">Alumnos</Link></li>
+              <UserArea />  {/* Área de usuario */}
               <li className="logout-container">
-                <button onClick={handleLogout} className="logout-button">Cerrar Sesión</button>
               </li>
             </>
           )}
@@ -33,8 +33,8 @@ const Header = () => {
           {isAuthenticated && userRole === 'alumno' && (
             <>
               <li><Link to="/examenes-asignados">Exámenes</Link></li>
+              <UserArea />  {/* Área de usuario */}
               <li className="logout-container">
-                <button onClick={handleLogout} className="logout-button">Cerrar Sesión</button>
               </li>
             </>
           )}
@@ -43,8 +43,8 @@ const Header = () => {
             <>
               <li><Link to="/examenes">Exámenes</Link></li>
               <li><Link to="/crear-examen">Crear Examen</Link></li>
+              <UserArea />  {/* Área de usuario */}
               <li className="logout-container">
-                <button onClick={handleLogout} className="logout-button">Cerrar Sesión</button>
               </li>
             </>
           )}

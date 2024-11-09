@@ -1,41 +1,98 @@
 /* src/pages/Estadisticas.css */
+
 .estadisticas-container {
-    max-width: 900px;
-    margin: 0 auto;
-    padding: 20px;
-    background-color: #f9f9f9;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  }
-  
-  .resultados-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-  }
-  
-  .resultados-table th,
-  .resultados-table td {
-    padding: 12px;
-    border-bottom: 1px solid #ddd;
-    text-align: center;
-  }
-  
-  .resultados-table th {
-    background-color: #007bff;
-    color: white;
-  }
-  
-  .detalle-btn {
-    background-color: #28a745;
-    color: white;
-    padding: 8px 12px;
-    border-radius: 4px;
-    text-decoration: none;
-    transition: background-color 0.3s ease;
-  }
-  
-  .detalle-btn:hover {
-    background-color: #218838;
-  }
-  
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.resultados-table,
+.preguntas-stats-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  margin-bottom: 30px; /* Añadir más espacio entre tablas */
+}
+
+.resultados-table th,
+.resultados-table td,
+.preguntas-stats-table th,
+.preguntas-stats-table td {
+  padding: 12px;
+  border-bottom: 1px solid #ddd;
+  text-align: center;
+}
+
+.resultados-table th,
+.preguntas-stats-table th {
+  background-color: #007bff;
+  color: white;
+}
+
+.detalle-btn {
+  background-color: #28a745;
+  color: white;
+  padding: 8px 12px;
+  border-radius: 4px;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+}
+
+.detalle-btn:hover {
+  background-color: #218838;
+}
+
+.metrics {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 20px;
+  font-size: 1.2rem;
+}
+
+.charts {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 40px;
+}
+
+.chart {
+  width: 45%;
+  height: 300px;
+}
+
+.preguntas-estadisticas-container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.sort-buttons {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.sort-buttons button {
+  background-color: #007bff;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 4px;
+  margin: 0 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.sort-buttons button.active {
+  background-color: #0056b3;
+}
+
+.sort-buttons button:hover {
+  background-color: #0056b3;
+}

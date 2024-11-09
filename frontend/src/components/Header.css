@@ -15,7 +15,7 @@
 .header ul {
   list-style-type: none;
   display: flex;
-  align-items: center; /* Alinea los elementos verticalmente */
+  align-items: center;
   margin: 0;
   padding: 0;
 }
@@ -35,10 +35,10 @@
   cursor: pointer;
   padding: 10px 20px;
   border-radius: 5px;
-  font-family: inherit; /* Asegura la misma fuente */
+  font-family: inherit;
   transition: background-color 0.3s ease, color 0.3s ease;
   display: inline-flex;
-  align-items: center; /* Alinea el texto verticalmente */
+  align-items: center;
 }
 
 .header ul li a:hover,
@@ -47,29 +47,69 @@
   color: white;
 }
 
-/* Posición de Cerrar Sesión a la derecha */
-.logout-container {
-  margin-left: auto; /* Empuja el botón de cerrar sesión a la derecha */
+/* User Area container for alignment */
+.user-area-container {
+  display: flex;
+  align-items: center;
+  position: relative;
 }
 
-/* Botón de "Cerrar Sesión" */
+/* Botón de usuario en el header */
+.user-button {
+  color: #f8f9fa;
+  font-size: 18px;
+  background-color: #343a40;
+  border: none;
+  cursor: pointer;
+  padding: 10px 20px;
+  display: inline-flex;
+  align-items: center;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  border-radius: 5px;
+}
+
+.user-button:hover {
+  background-color: #007bff;
+}
+
+/* Menú desplegable */
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background-color: #343a40;
+  border: 1px solid #007bff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+  overflow: hidden;
+  z-index: 1000;
+  width: 200px;
+}
+
+.dropdown-item {
+  display: block;
+  padding: 10px 15px;
+  color: #f8f9fa;
+  text-decoration: none;
+  font-size: 16px;
+  transition: background-color 0.2s;
+}
+
+.dropdown-item:hover {
+  background-color: #007bff;
+  color: white;
+}
+
 .logout-button {
   background-color: #dc3545;
-  color: white;
+  color: #f8f9fa;
+  padding: 10px 20px;
+  text-align: left;
+  width: 100%;
+  border: none;
+  cursor: pointer;
 }
 
 .logout-button:hover {
   background-color: #c82333;
-}
-
-/* Botones de "Iniciar Sesión" y "Registrarse" */
-.login-button,
-.register-button {
-  background-color: #28a745;
-  color: white;
-}
-
-.login-button:hover,
-.register-button:hover {
-  background-color: #218838;
 }

@@ -69,7 +69,7 @@ class Pregunta(models.Model):
 
 
 class Opcion(models.Model):
-    texto = models.CharField(max_length=300)
+    texto = models.CharField(max_length=1000)
     es_correcta = models.BooleanField(default=False)
     pregunta = models.ForeignKey(Pregunta, on_delete=models.CASCADE, related_name="opciones")
 

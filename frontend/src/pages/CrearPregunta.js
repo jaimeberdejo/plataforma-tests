@@ -3,7 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { createPregunta } from '../services/preguntaService';
 import './PreguntaForm.css';
 
-const CrearPregunta = () => {
+const CrearPregunta = ({ closeModal, refreshPreguntas }) => {
   const { examenId } = useParams();
   const navigate = useNavigate();
 
@@ -50,7 +50,8 @@ const CrearPregunta = () => {
   
     try {
       await createPregunta(preguntaData);
-      navigate(`/examenes/${examenId}/preguntas`);
+      closeModal(); // Cierra el modal después de la creación
+      refreshPreguntas(); // Refresca la lista de exámenes
     } catch (error) {
       console.error('Error al crear la pregunta:', error);
     }

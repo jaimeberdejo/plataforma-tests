@@ -1,11 +1,11 @@
+// src/pages/EditarExamen.js
 import React, { useState, useEffect, useContext } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
 import { getExamenById, updateExamen } from '../services/examenService';
 import { getAlumnos } from '../services/alumnoService';
 import { AuthContext } from '../context/AuthContext';
 import './ExamenForm.css';
 
-const EditarExamen = () => {
+const EditarExamen = ({ examenId, closeModal }) => {  // Recibe examenId y closeModal como props
   const [nombre, setNombre] = useState('');
   const [descripcion, setDescripcion] = useState('');
   const [randomizarPreguntas, setRandomizarPreguntas] = useState(false);
@@ -15,43 +15,37 @@ const EditarExamen = () => {
   const [alumnos, setAlumnos] = useState([]);
   const [alumnosSeleccionados, setAlumnosSeleccionados] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const { id } = useParams();
-  const navigate = useNavigate();
   const { userId, userRole } = useContext(AuthContext);
 
   useEffect(() => {
-    if (userRole !== 'profesor' && userRole !== 'independiente') {
-      navigate('/'); // Redirige si el rol no es profesor o independiente
-    } else {
-      const fetchExamenData = async () => {
-        try {
-          const examen = await getExamenById(id);
-          if (examen) {
-            setNombre(examen.nombre || '');
-            setDescripcion(examen.descripcion || '');
-            setRandomizarPreguntas(examen.randomizar_preguntas || false);
-            setRandomizarOpciones(examen.randomizar_opciones || false);
-            setPreguntasPorPagina(examen.preguntas_por_pagina || 'todas');
-            setNumeroPreguntas(examen.numero_preguntas || 10);
-            setAlumnosSeleccionados(examen.alumnos_asignados || []);
-          } else {
-            console.error('Examen no encontrado');
-          }
-
-          if (userRole === 'profesor') {
-            const alumnosData = await getAlumnos(userId);
-            setAlumnos(alumnosData);
-          }
-          setIsLoading(false);
-        } catch (error) {
-          console.error("Error al cargar el examen o los alumnos:", error);
-          setIsLoading(false);
+    const fetchExamenData = async () => {
+      try {
+        const examen = await getExamenById(examenId);
+        if (examen) {
+          setNombre(examen.nombre || '');
+          setDescripcion(examen.descripcion || '');
+          setRandomizarPreguntas(examen.randomizar_preguntas || false);
+          setRandomizarOpciones(examen.randomizar_opciones || false);
+          setPreguntasPorPagina(examen.preguntas_por_pagina || 'todas');
+          setNumeroPreguntas(examen.numero_preguntas || 10);
+          setAlumnosSeleccionados(examen.alumnos_asignados || []);
+        } else {
+          console.error('Examen no encontrado');
         }
-      };
 
-      fetchExamenData();
-    }
-  }, [id, userId, userRole, navigate]);
+        if (userRole === 'profesor') {
+          const alumnosData = await getAlumnos(userId);
+          setAlumnos(alumnosData);
+        }
+        setIsLoading(false);
+      } catch (error) {
+        console.error("Error al cargar el examen o los alumnos:", error);
+        setIsLoading(false);
+      }
+    };
+
+    fetchExamenData();
+  }, [examenId, userId, userRole]);
 
   const handleAlumnoChange = (alumnoId) => {
     setAlumnosSeleccionados((prev) =>
@@ -73,8 +67,8 @@ const EditarExamen = () => {
     };
 
     try {
-      await updateExamen(id, examenData);
-      navigate('/examenes');
+      await updateExamen(examenId, examenData);
+      closeModal();  // Cierra el modal tras guardar los cambios
     } catch (error) {
       console.error('Error al actualizar el examen:', error);
     }
@@ -151,7 +145,6 @@ const EditarExamen = () => {
           </select>
         </div>
 
-        {/* Selección de alumnos asignados, solo visible para profesores */}
         {userRole === 'profesor' && (
           <div className="form-group">
             <label>Asignar Alumnos</label>
@@ -178,3 +171,4 @@ const EditarExamen = () => {
 };
 
 export default EditarExamen;
+

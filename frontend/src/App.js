@@ -18,6 +18,8 @@ import Register from './pages/Register';
 import Alumnos from './pages/Alumnos';
 import Estadisticas from './pages/Estadisticas';
 import ResultadoDetalle from './pages/ResultadoDetalle';
+import UserArea from './components/UserArea';
+import DatosUsuario from './pages/DatosUsuario';
 
 
 import './App.css';
@@ -45,6 +47,7 @@ const App = () => {
             <Route path="/alumnos" element={<Alumnos />} />  
             <Route path="/examenes/:examenId/estadisticas" element={<Estadisticas />} />  
             <Route path="/resultados-detalle" element={<ResultadoDetalle />} />
+            <Route path="/datos-usuario" element={<DatosUsuario />} />
           </Routes>
         </main>
       </Router>

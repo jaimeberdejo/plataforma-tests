@@ -1,7 +1,7 @@
 .examen-list-container {
   max-width: 800px;
   margin: 0 auto;
-  background-color: #f9f9f9;
+  background-color: #e0f0ff; /* Cambiado a azul claro */
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -12,33 +12,31 @@
   padding: 0;
 }
 
+
 .examen-list-container li {
   display: flex;
-  justify-content: space-between;  /* Añade espacio entre los elementos del contenido */
+  justify-content: space-between;
   align-items: center;
-  background-color: #fff;
-  padding: 15px;
-  margin-bottom: 10px;
-  border-radius: 5px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  gap: 10px; /* Añade un pequeño espacio entre los elementos principales */
 }
 
 .examen-list-container li div {
   flex-grow: 1;
 }
-
 .examen-list-container .actions {
   display: flex;
   gap: 10px;
-  justify-content: flex-end;  /* Alinea los botones a la derecha */
+  justify-content: flex-end;
+  flex-wrap: nowrap; /* Asegura que no se separen a otra línea */
 }
+
 
 .examen-list-container .edit-button,
 .examen-list-container .delete-button {
   background-color: #007bff;
   border: none;
   padding: 10px 15px;
-  color: white;
+  color: ·#e0f0ff;
   cursor: pointer;
   border-radius: 5px;
   transition: background-color 0.3s ease;
@@ -67,8 +65,8 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 20px;
-  background-color: #f1f1f1;
+  padding: 40px;
+  background-color: #e0f0ff;
 }
 
 .crear-examen-button,
@@ -83,6 +81,12 @@
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
+body {
+  background-color: #e0f0ff; /* Fondo azul claro que cubre toda la página */
+  margin: 0; /* Elimina el margen para que el color cubra toda el área visible */
+  padding: 0;
+  font-family: Arial, sans-serif; /* Asegura una tipografía consistente */
+}
 
 .crear-examen-button:hover,
 .crear-examen-txt-button:hover {
@@ -95,4 +99,51 @@
 
 .crear-examen-txt-button:hover {
   background-color: #138496;
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  max-width: 600px;
+  width: 90%;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  position: relative;
+  animation: fadeIn 0.3s ease; /* Añade un suave efecto de entrada */
+}
+
+.close-modal-button {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  font-size: 24px;
+  color: #007bff; /* Color destacado */
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.close-modal-button:hover {
+  color: #0056b3; /* Cambia de color al pasar el ratón */
+}
+
+
+/* Animación para el modal */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }

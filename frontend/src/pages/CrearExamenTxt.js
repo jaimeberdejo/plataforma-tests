@@ -4,7 +4,7 @@ import { uploadTxtExamen } from '../services/examenService'; // Servicio para ca
 import { AuthContext } from '../context/AuthContext'; // Importar el contexto de autenticación
 import './CrearExamenTxt.css';
 
-const CrearExamenTxt = () => {
+const CrearExamenTxt = ({ closeModal, refreshExamenes }) => {
   const [archivo, setArchivo] = useState(null);
   const navigate = useNavigate();
   const { userId } = useContext(AuthContext); // Obtener userId del contexto
@@ -27,7 +27,8 @@ const CrearExamenTxt = () => {
 
     try {
       await uploadTxtExamen(formData);
-      navigate('/examenes');
+      closeModal();
+      refreshExamenes();
     } catch (error) {
       console.error('Error al cargar el archivo:', error);
     }

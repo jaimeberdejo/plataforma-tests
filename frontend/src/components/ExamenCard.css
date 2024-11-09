@@ -30,15 +30,18 @@
 }
 
 .actions {
-  display: flex;                             /* Alineación horizontal de los botones */
-  flex-wrap: wrap;                           /* Permite que los botones se ajusten en varias líneas */
-  gap: 10px;                                 /* Separación entre botones */
+  display: flex;
+  gap: 10px;
+  justify-content: space-between; /* Espacio entre botones */
+  align-items: center;            /* Centrar verticalmente los botones */
+  min-width: 300px;
+  flex-wrap: nowrap;
 }
 
 .actions .btn {
   background-color: #007bff;                 /* Color de fondo para botones */
   color: #ffffff;                            /* Color del texto del botón */
-  padding: 10px 15px;                        /* Relleno de los botones */
+  padding: 8px 12px;                        /* Relleno de los botones */
   border: none;                              /* Sin borde */
   border-radius: 6px;                        /* Bordes redondeados */
   text-decoration: none;                     /* Sin subrayado en los enlaces */
@@ -67,3 +70,14 @@
 .actions .btn.stats-button:hover {
   background-color: #218838;                 /* Color de hover para estadísticas */
 }
+
+
+/* ExamenCard.css */
+
+.examen-card {
+  /* Estilos para la tarjeta del examen */
+  max-width: 600px;
+  margin: 20px auto;
+}
+
+
